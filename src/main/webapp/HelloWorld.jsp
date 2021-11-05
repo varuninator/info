@@ -16,7 +16,7 @@
 		<label>Password: <input/></label>
 		<button>Create Account</button>
 		<form method="post" action="show.jsp">
-		  <input type="submit" value=login />
+		  <input type="submit" value=Login />
 		</form>
 	</body>
 </html>
