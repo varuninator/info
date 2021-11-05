@@ -12,7 +12,6 @@
 <body>
 	<%
 	try {
-
 		//Get the database connection
 		ApplicationDB db = new ApplicationDB();	
 		Connection con = db.getConnection();
@@ -21,21 +20,20 @@
 		Statement stmt = con.createStatement();
 
 		//Get parameters from the HTML form at the HelloWorld.jsp
-		String newBar = request.getParameter("barvalia");
-		String newBeer = request.getParameter("beer");
-		float price = Float.valueOf(request.getParameter("price"));
+		String u = request.getParameter("user");
+		String p = request.getParameter("pass");
 
 
 		//Make an insert statement for the Sells table:
-		String insert = "INSERT INTO sells(bar, beer, price)"
+		String insert = "INSERT INTO users(username, password, type)"
 				+ "VALUES (?, ?, ?)";
 		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 		PreparedStatement ps = con.prepareStatement(insert);
 
 		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-		ps.setString(1, newBar);
-		ps.setString(2, newBeer);
-		ps.setFloat(3, price);
+		ps.setString(1, u);
+		ps.setString(2, p);
+		ps.setFloat(3, 2);
 		//Run the query against the DB
 		ps.executeUpdate();
 
@@ -43,7 +41,6 @@
 		con.close();
 
 		out.print("Insert succeeded!");
-		
 	} catch (Exception ex) {
 		out.print(ex);
 		out.print("Insert failed :()");

@@ -12,9 +12,11 @@
 	</head>
 	
 	<body>
-		<label>Username: <input/></label>
-		<label>Password: <input/></label>
-		<button>Create Account</button>
+		<form method="get" action="sellsNewBeer.jsp">
+			<label>Username: <input name = "user"/></label>
+			<label>Password: <input name = "pass"/></label>
+		  <input type="submit" value="Create Account" />
+		</form>
 		<form method="post" action="show.jsp">
 		  <input type="submit" value=Login />
 		</form>
