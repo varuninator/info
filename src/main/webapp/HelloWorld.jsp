@@ -17,8 +17,10 @@
 			<label>Password: <input name = "pass"/></label>
 		  <input type="submit" value="Create Account" />
 		</form>
-		<form method="post" action="show.jsp">
-		  <input type="submit" value=Login />
+		<form method="get" action="login.jsp">
+			<label>Username: <input name = "user"/></label>
+			<label>Password: <input name = "pass"/></label>
+		  <input type="submit" value="Login" />
 		</form>
 	</body>
 </html>

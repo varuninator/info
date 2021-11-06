@@ -25,13 +25,13 @@
 
 
 		//Make an insert statement for the Sells table:
-		String insert = "INSERT INTO users(username, password, type)"
+		String insert = "INSERT INTO user(username, pass, type1)"
 				+ "VALUES (?, ?, ?)";
 		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 		PreparedStatement ps = con.prepareStatement(insert);
 
 		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-		ps.setString(1, u);
+		ps.setString(1,u);
 		ps.setString(2, p);
 		ps.setFloat(3, 2);
 		//Run the query against the DB
