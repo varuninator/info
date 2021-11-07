@@ -12,7 +12,7 @@
 	</head>
 	
 	<body>
-		<form method="get" action="sellsNewBeer.jsp">
+		<form method="get" action="createAccount.jsp">
 			<label>Username: <input name = "user"/></label>
 			<label>Password: <input name = "pass"/></label>
 		  <input type="submit" value="Create Account" />
