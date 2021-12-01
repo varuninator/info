@@ -3,10 +3,6 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 
-<%
-String username = "ggjudhnbf";
-session.setAttribute("username", username);
-%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -16,15 +12,9 @@ session.setAttribute("username", username);
 	</head>
 	
 	<body>
-		<form method="get" action="createAccount.jsp">
-			<label>Username: <input name = "user"/></label>
-			<label>Password: <input name = "pass"/></label>
-		  <input type="submit" value="Create Account" />
-		</form>
 		<form method="get" action="HomePage.jsp">
-			<label>Username: <input name = "user"/></label>
-			<label>Password: <input name = "pass"/></label>
-		  <input type="submit" value="Login" />
+			<label>Search Flights: <input name = "search"/></label>
+		  <input type="submit" value="Search" />
 		</form>
 	</body>
 </html>

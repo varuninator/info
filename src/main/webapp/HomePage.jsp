@@ -22,6 +22,12 @@ try {
 			//Get the combobox from the index.jsp
 			String username = request.getParameter("user");
 			String password = request.getParameter("pass");
+			if(username != null){
+				session.setAttribute("user", username);
+			}
+			if(password != null){
+				session.setAttribute("pass", password);
+			}
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 			String str = "SELECT * FROM user";
 			
@@ -29,9 +35,10 @@ try {
 			ResultSet result = stmt.executeQuery(str);
 			
 			while (result.next()) {
-				if((result.getString("username").equals(username))&&result.getString("pass").equals(password)){
+				if((result.getString("username").equals(session.getAttribute("user")))&&result.getString("pass").equals(session.getAttribute("pass"))){
 				 	loggedIn = true;
-					out.print("You are currently logged in as "+ username);
+				 	
+					out.print("You are currently logged in as  "+ session.getAttribute("user"));
 					if(result.getInt("type1")==(0)){
 						out.print(" and are an admin.");
 					}
@@ -40,12 +47,25 @@ try {
 					}
 					else{
 						out.print(" and are a customer.");
+						%>
+						<form method="get" action="HelloWorld.jsp">
+			  				<input type="submit" value="Logout" />
+						</form>
+						<body>
+						<form method="get" action="HomePage.jsp">
+							<label>Search Flights: <input name = "search"/></label>
+			 				 <input type="submit" value="Search" />
+						</form>
+						</body>
+						<form method="get" action="Account.jsp">
+		  				<input type="submit" value="Account" />
+						</form>
+						<form method="get" action="UserQuestions.jsp">
+		  				<input type="submit" value="Questions" />
+						</form>
+						<%
 					}
-					%>
-					<form method="get" action="HelloWorld.jsp">
-		  				<input type="submit" value="Logout" />
-					</form>
-					<%
+					
 				}
 				
 				
