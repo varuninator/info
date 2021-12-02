@@ -16,6 +16,7 @@ try {
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();
 			boolean loggedIn = false;
+			boolean search = false;
 			
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
@@ -52,7 +53,7 @@ try {
 			  				<input type="submit" value="Logout" />
 						</form>
 						<body>
-						<form method="get" action="HomePage.jsp">
+						<form method="get" action="Browse.jsp">
 							<label>Search Flights: <input name = "search"/></label>
 			 				 <input type="submit" value="Search" />
 						</form>
