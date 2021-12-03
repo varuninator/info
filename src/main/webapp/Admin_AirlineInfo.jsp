@@ -18,21 +18,15 @@ try {
 			
 	%>
 	<body>
-	<label
+	<label>Insert Name of Current Airline from Query</label>
 	</body>
 	<form method="get" action="HomePage.jsp">
-		<label>New Airline ID: <input name="browse" /></label> <input
-			type="submit" value="Browse" />
+		<label>Show Airline Revenue:</label> <input
+			type="submit" value="Show" />
 	</form>
-
-	<form method="get" action="Book.jsp">
-		<input type="submit" value="Book" />
+	<form method="get" action="HomePage.jsp">
+		<input type="submit" value="Back" />
 	</form>
-
-	<form method="get" action="Account.jsp">
-		<input type="submit" value="Enter Waiting List" />
-	</form>
-
 
 	<%
 					
