@@ -36,13 +36,43 @@ try {
 			ResultSet result = stmt.executeQuery(str);
 			
 			while (result.next()) {
-				if((result.getString("username").equals(session.getAttribute("user")))&&result.getString("password").equals(session.getAttribute("pass"))){
+				if((result.getString("username").equals(session.getAttribute("user")))&&result.getString("pass").equals(session.getAttribute("pass"))){
 				 	loggedIn = true;
 				 	
 					out.print("You are currently logged in as  "+ session.getAttribute("user"));
-					if(result.getInt("type")==(0)){
+					if(result.getInt("type1")==(0)){
 						out.print(" and are an admin.");
+						%>
+						<form method="get" action="HelloWorld.jsp">
+			  				<input type="submit" value="Logout" />
+						</form>
+						<body>
+						<form method="get" action="FlightInfoAdminView.jsp">
+							<label>Search Flights:   <input name = "SearchFlight"/></label>
+			 				 <input type="submit" value="Search Flights" />
+						</form>
+						</body>
+						<form method="get" action="AdminViewUserInfo.jsp">
+							<label>Search Users:   <input name = "SearchUser"/></label>
+			 				 <input type="submit" value="Search User" />
+						</form>
+						<form method="get" action="AirlineInfoAdmin.jsp">
+							<label>Search Airlines: <input name = "SearchAirline"/></label>
+			 				 <input type="submit" value="Search Airline" />
+						</form>
+						<form method="get" > 
+		  				<input type="submit" value="Sales Report" />
+						</form>
+						<form method="get" action="UserList.jsp" > 
+		  				<input type="submit" value="List of all users" />
+						</form>
+						<form method="get" action="FlightList.jsp" > 
+		  				<input type="submit" value="List of most active Flights" />
+						</form>
+						<%
+						
 					}
+
 					else if(result.getInt("type")==1){
 						out.print(" and are a customer representative.");
 						%>
