@@ -38,8 +38,8 @@ try {
 			
 			//Run the query against the database.
 			//ResultSet result = stmt.executeQuery(str);
-			String str = "SELECT * FROM users";
-			
+			String str = "SELECT * FROM user";
+		
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
 			while(result.next()){
@@ -51,7 +51,7 @@ try {
 			 				 <input type="submit" value="edit" />
 						</form>
 					<%
-					label = "Type: " + result.getInt("Type");
+					label = "Type: " + result.getInt("type1");
 					%>
 					<form method="get" action="rep_UserInformation.jsp">
 							<label><%=label + " "%><input name = "edit_type"/></label>

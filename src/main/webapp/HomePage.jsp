@@ -30,7 +30,7 @@ try {
 				session.setAttribute("pass", password);
 			}
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			String str = "SELECT * FROM users";
+			String str = "SELECT * FROM user";
 			
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
@@ -73,7 +73,7 @@ try {
 						
 					}
 
-					else if(result.getInt("type")==1){
+					else if(result.getInt("type1")==1){
 						out.print(" and are a customer representative.");
 						%>
 						<form method="get" action="HelloWorld.jsp">
@@ -99,6 +99,9 @@ try {
 						<form method="get" action="rep_AirlineInformation.jsp">
 							<label>Search Airline: <input name = "search"/></label>
 			 				 <input type="submit" value="Search" />
+						</form>
+						<form method="get" action="UserQuestions.jsp">
+			  				<input type="submit" value="Browse User Questions" />
 						</form>
 						<%
 					}
