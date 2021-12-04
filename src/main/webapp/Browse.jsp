@@ -37,7 +37,7 @@ try {
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 			//ONE way Search
 			String str = "";
-			if(session.getAttribute("search2").equals("")){
+			if(session.getAttribute("search2") == null){
 				if(!request.getParameter("airStart").equals("") && !request.getParameter("airEnd").equals("")){
 					str = "SELECT * FROM otrs.flight where departing_airport =\"" + request.getParameter("airStart") + "\" and arriving_airport = \"" + request.getParameter("airEnd") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"";
 				}else if (!request.getParameter("airStart").equals("")){
