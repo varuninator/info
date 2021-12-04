@@ -31,7 +31,7 @@ try {
 			if(username != null){
 				session.setAttribute("user", username);
 			}
-			String str = "SELECT * FROM flys INNER JOIN aircraft ON aircraft.aircraft_id = flys.aircraft_id INNER JOIN flight ON flight.flight_number = flys.flight_number;";
+			String str = "SELECT * FROM waitlist";
 			ResultSet result = stmt.executeQuery(str);
 				
 			
@@ -53,33 +53,68 @@ try {
 		  				<input type="submit" value="Change Ticket" />
 						</form>
 						
-				
+					
 						<%
-						
-						 String insert = "INSERT INTO waitlist(flight_number, username) value ("
-								+ Collections.list(request.getParameterNames()).get(0) + ", \"" + session.getAttribute("user") + "\"" + ")";
-						
-						
+						boolean wl = true;
+						   /*String insert = "INSERT INTO waitlist(flight_number, username, spot) value ("
+								+ Collections.list(request.getParameterNames()).get(0) + ", \"" + session.getAttribute("user") + "\", " + 1 + ")";*/
+								while(result.next()){
+								if(session.getAttribute("user").equals(result.getString("username"))&&Collections.list(request.getParameterNames()).get(0).equals(result.getString("flight_number"))){
+										out.print("You have already been put in waitlist. Please try another flight. ");
+										
+												wl = false;
+												break;
+								}
+									
+								
+								}
+								
+								
+								//out.print(wl);
+								
+								if(wl == true){
+									String insert = "INSERT INTO waitlist(flight_number, username) value ("
+											+ Collections.list(request.getParameterNames()).get(0) + ", \"" + session.getAttribute("user") + "\""+")"; //[increaments spot to check waitlist you can just say if the spot is less than any other spots that correspond to the flight number he is next in line]
+									 PreparedStatement ps = con.prepareStatement(insert);
+
+										//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
+										
+										//Run the query against the DB
+										ps.executeUpdate();
+										out.print("You have been added to the waitlist");
+								}
+								
+												
+												//out.print(result.getString(username));
 						
 						
 						//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 						//out.print(insert);
-						PreparedStatement ps = con.prepareStatement(insert);
-
-						//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-						
-						//Run the query against the DB
-						ps.executeUpdate();
-						
-						/* String up = "UPDATE otrs.waitlist SET spot = spot+1 WHERE flight_number =" + Collections.list(request.getParameterNames()).get(0);
-						PreparedStatement ps1 = con.prepareStatement(up);
-						
-						ps1.executeUpdate();*/
 						
 						
+							//if(session.getAttribute("user").equals())
+								/*while(result.next()){
+									if(session.getAttribute("user").equals(result.getString("username"))){
+										String up = "UPDATE otrs.waitlist SET waitlist.spot = waitlist.spot+1 WHERE flight_number =" + Collections.list(request.getParameterNames()).get(0);
+										PreparedStatement ps1 = con.prepareStatement(up);
+										ps1.executeUpdate();
+										break;
+									}
+									
+								}*/
+							 
+								
+								
+								
+					
 						
-						out.print("Waiting List Pending");
-						//out.print(result.getInt("spot"));
+						
+						
+						
+						
+						
+						
+						
 					
 } catch (Exception e) {
 	out.print(e);
