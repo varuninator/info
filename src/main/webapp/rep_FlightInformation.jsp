@@ -26,6 +26,34 @@ try {
 			if(sch != null){
 				session.setAttribute("search", sch);
 			}
+			
+			if(request.getParameter("edit_flight_number") != null ){
+				String update = "update flight set flight_number =" + request.getParameter("edit_flight_number") + " where flight_number = " + session.getAttribute("search");
+				stmt.executeUpdate(update);
+				session.setAttribute("search", request.getParameter("edit_flight_number"));
+				
+			}
+			if(request.getParameter("edit_departing_airport") != null ){
+				String update = "update flight set departing_airport =" + request.getParameter("edit_departing_airport") + " where flight_number = " + session.getAttribute("search");
+				stmt.executeUpdate(update);
+				
+			}
+			if(request.getParameter("edit_arriving_airport") != null ){
+				String update = "update flight set arriving_airport =" + request.getParameter("edit_arriving_airport") + " where flight_number = " + session.getAttribute("search");
+				stmt.executeUpdate(update);
+				
+			}
+			if(request.getParameter("edit_departure_time") != null ){
+				String update = "update flight set departure_time = \"" + request.getParameter("edit_departure_time") + "\" where flight_number = " + session.getAttribute("search");
+				stmt.executeUpdate(update);
+				
+			}
+			if(request.getParameter("edit_arrival_time") != null ){
+				String update = "update flight set arrival_time = \"" + request.getParameter("edit_arrival_time") + "\" where flight_number = " + session.getAttribute("search");
+				out.print(update);
+				stmt.executeUpdate(update);
+				
+			}
 			%>
 			<form method="get" action="rep_FlightInformation.jsp">
 					<label>Search Flight: <input name = "search"/></label>
@@ -38,10 +66,10 @@ try {
 			
 			//Run the query against the database.
 			//ResultSet result = stmt.executeQuery(str);
-			String str = "SELECT * FROM users";
-			
-			//Run the query against the database.
+			String str = "SELECT * FROM flight";
 			ResultSet result = stmt.executeQuery(str);
+			//Run the query against the database.
+			
 			while(result.next()){
 				if(result.getString("flight_number").equals(session.getAttribute("search"))){
 					String label = "Flight Number: " + result.getInt("flight_number");
@@ -65,7 +93,30 @@ try {
 			 				 <input type="submit" value="edit" />
 						</form>
 					<%
-					out.print("<br/>");
+					label = "Departure time: " + result.getTimestamp("departure_time");
+					%>
+					<form method="get" action="rep_FlightInformation.jsp">
+							<label><%=label + " "%><input name = "edit_departure_time"/></label>
+			 				 <input type="submit" value="edit" />
+						</form>
+					<%
+					label = "arrival time: " + result.getTimestamp("arrival_time");
+					%>
+					<form method="get" action="rep_FlightInformation.jsp">
+							<label><%=label + " "%><input name = "edit_arrival_time"/></label>
+			 				 <input type="submit" value="edit" />
+						</form>
+					<%
+					str = "SELECT username FROM waitlist where flight_number = " + result.getInt("flight_number");
+					result = stmt.executeQuery(str);
+					
+					out.print("Waiting List: </br>");
+					
+					while(result.next()){
+						out.print(result.getString("username") +", " + result.getInt("spot") + "</br>");
+					}
+					
+					break;
 				}
 			}
 			

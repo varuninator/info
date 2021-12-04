@@ -35,7 +35,6 @@ try {
 			}
 			if(request.getParameter("edit_number_of_seats") != null ){
 				String update = "update aircraft set number_of_seats = \"" + request.getParameter("edit_number_of_seats") + "\" where aircraft_id = \"" + session.getAttribute("search") + "\"";
-				out.print(update);
 				stmt.executeUpdate(update);
 				
 			}

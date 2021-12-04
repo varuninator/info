@@ -38,13 +38,12 @@ try {
 			
 			//Run the query against the database.
 			//ResultSet result = stmt.executeQuery(str);
-			String str = "SELECT * FROM users";
-			
+			String str = "SELECT * FROM airport";
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
 			while(result.next()){
 				if(result.getString("airport_id").equals(session.getAttribute("search"))){
-					String label = "Airportr: " + result.getInt("airport_id");
+					String label = "Airportr: " + result.getString("airport_id");
 					%>
 					<form method="get" action="rep_AirportInformation.jsp">
 							<label><%=label + " "%><input name = "edit_airport"/></label>
@@ -52,6 +51,13 @@ try {
 						</form>
 					<%
 					out.print("<br/>");
+					
+					str = "SELECT * FROM flight where arriving_airport = \"" + result.getString("airport_id") + "\" or departing_airport = \"" + result.getString("airport_id") + "\"";
+					result = stmt.executeQuery(str);
+					while(result.next()){
+						out.print("Flight number:" + result.getInt("flight_number") + ", Start: " + result.getString("departing_airport") + ", End: " + result.getString("arriving_airport") + ", Take-off Time: " + result.getTimestamp("departure_time") + ", Arrival Time: " + result.getTimestamp("arrival_time")+ ", Price: " + result.getInt("base_price") + "</br>");
+					}
+					break;
 				}
 			}
 			
