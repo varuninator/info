@@ -146,7 +146,7 @@ try {
 							<label>Search Aircraft: <input name = "search"/></label>
 			 				 <input type="submit" value="Search" />
 						</form>
-						<form method="get" action="UserQuestions.jsp">
+						<form method="get" action="RepBrowseQuestions.jsp">
 			  				<input type="submit" value="Browse User Questions" />
 						</form>
 						<%

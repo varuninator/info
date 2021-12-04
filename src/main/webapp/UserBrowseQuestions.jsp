@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>User Questions</title>
+<title>User Browse Questions</title>
 </head>
 <body>
 <%
@@ -23,25 +23,27 @@ try {
 			
 			
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			//String str = "SELECT * FROM user";
+			String str = "SELECT * FROM otrs.question_answer";
 			
 			//Run the query against the database.
-			//ResultSet result = stmt.executeQuery(str);
-			
+			ResultSet result = stmt.executeQuery(str);
+
+			while(result.next()) {
+				out.print("Question #" + result.getInt("question_number") + ": " + result.getString("question_string") + "?");
+				%>
+				<body>
+				<br>
+				</body>
+				<%
+				out.print("Answer #" + result.getInt("question_number") + ": " + result.getString("answer_string"));
+				%>
+				<body>
+				<br><br>
+				</body>
+				<%				
+			}
 
 
-						%>
-						<form method="get" action="UserQuestionAsked.jsp">
-							<label>Enter a Question: <input name = "question"/></label>
-			 				 <input type="submit" value="Ask" />
-						</form>
-						
-						<form method="get" action="UserBrowseQuestions.jsp">
-			 				 <input type="submit" value="Browse Questions" />
-						</form>
-				
-						<%
-					
 } catch (Exception e) {
 	out.print(e);
 }
