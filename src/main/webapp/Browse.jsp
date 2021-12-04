@@ -33,6 +33,17 @@ try {
 			if(sch2 != null){
 				session.setAttribute("search2", sch2);
 			}
+			
+			//out.print(request.getParameter("button0"));
+			//out.print("test");
+			if(request.getParameter("button0") == "") {
+				out.print("test");
+	        }
+			else if(request.getParameter("button1") == "") {
+				out.print("test");
+	        }
+			//out.print(session.getAttribute("selected_flight"));
+			
 			//out.print("You have selected the date " + sch + " do you want to book?");
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 			//ONE way Search
@@ -63,19 +74,28 @@ try {
 			}
 				
 			ResultSet result = stmt.executeQuery(str);
+			int count = 0;
 			while(result.next()){
 				out.print("Flight number:" + result.getInt("flight_number") + ", Start: " + result.getString("departing_airport") + ", End: " + result.getString("arriving_airport") + ", Time: " + result.getTime("departure_time") + ", Price: " + result.getInt("base_price"));
+				int flight_num = result.getInt("flight_number");
 				%>
-				<form method="get" action="Book.jsp">
-  				<input type="submit" value="Book" />
+				<form name = <%="form" + count %> method="get" action = "Book.jsp">
+				<input type = "hidden" name = <%=flight_num %>>
+  				<input type="submit" value="Book" onclick = <%="func" + count %>()/>
 				</form>
 				
 				<form method="get" action="Account.jsp">
   				<input type="submit" value="Enter Waiting List" />
 				</form>
 
-		
+				<script language = "JavaScript">
+					function <%="func" + count %>(){
+						document.<%="form" + count %>.<%=flight_num%>.value = "yes";
+						<%="form" + count %>.submit();
+					}
+				</script>
 				<%
+				count++;
 			}
 			
 			
