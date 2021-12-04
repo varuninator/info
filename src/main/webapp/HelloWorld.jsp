@@ -3,8 +3,6 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -16,6 +14,8 @@
 		<form method="get" action="createAccount.jsp">
 			<label>Username: <input name = "user"/></label>
 			<label>Password: <input name = "pass"/></label>
+			<label>First Name: <input name = "first"/></label>
+			<label>Last Name: <input name = "last"/></label>
 		  <input type="submit" value="Create Account" />
 		</form>
 		<form method="get" action="HomePage.jsp">
