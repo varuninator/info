@@ -85,7 +85,6 @@ try {
 					str = "SELECT * FROM otrs.flight where date(departure_time) = \"" + session.getAttribute("search") + "\" order by " + orderby;
 				}
 			}
-			out.print(str);	
 			ResultSet result = stmt.executeQuery(str);
 			int count = 0;
 			%>
