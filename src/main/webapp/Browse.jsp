@@ -30,7 +30,7 @@ try {
 			String sch2 = request.getParameter("search2");
 			//String sch1 = request.getParameter("search");
 		
-			if(sch != null){
+			if(sch2 != null){
 				session.setAttribute("search2", sch2);
 			}
 			//out.print("You have selected the date " + sch + " do you want to book?");
