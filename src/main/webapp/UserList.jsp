@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>User List</title>
 </head>
 <body>
 <%
@@ -15,42 +15,30 @@
 try {
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();
-			boolean search = false;
 			
 			//Create a SQL statement
-			Statement stmt = con.createStatement();
-			//Get the combobox from the index.jsp
-			
-			String sch = request.getParameter("search");
-			
-			if(sch != null){
-				session.setAttribute("search", sch);
-			}
-			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			//String str = "SELECT * FROM user";
+			Statement stmt = con.createStatement();		
+			String str = "SELECT * FROM user";
 			
 			//Run the query against the database.
-			//ResultSet result = stmt.executeQuery(str);
+			ResultSet result = stmt.executeQuery(str);
+			out.print("All Customer Repersentatives: <br/>");
+			while (result.next()) {
+				if(result.getInt("type1")==(1)){				 	
+					out.print(result.getString("username")+ "<br/>");
+				}			
+			}		
+			out.print("<br/>All Users: <br/>");
+			ResultSet result2 = stmt.executeQuery(str);
+			while (result2.next()) {
+				if(result2.getInt("type1")!=(0)&&result2.getInt("type1")!=(1)){				 	
+					out.print(result2.getString("username")+ "<br/>");
+				}			
+			}	
 			
-			
-			for(int i = 0; i<5; i++){
-				out.print("User " + i);
-				%>
-				<form method="get" action="AdminViewUserInfo.jsp">
-  				<input type="submit" value="More Info" />
-				</form>
-				
-				<form method="get" action="DeleteUser.jsp">
-  				<input type="submit" value="Delete" />
-				</form>
-				<%
-			}
-				
-
 } catch (Exception e) {
 	out.print(e);
 }
-			%>
-			
+%>			
 </body>
 </html>
