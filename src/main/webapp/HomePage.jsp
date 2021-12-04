@@ -29,6 +29,11 @@ try {
 			if(password != null){
 				session.setAttribute("pass", password);
 			}
+			
+			String rep_user = request.getParameter("SearchUser");
+			if(rep_user != null){
+				session.setAttribute("rep_user", rep_user);
+			}
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 			String str = "SELECT * FROM user";
 			//String strFlight = "SELECT * FROM otrs.flight";
@@ -56,6 +61,7 @@ try {
 						</form>
 						</body>
 						<br>
+						
 						<form method="get" action="AdminViewUserInfo.jsp">
 							<label>Search Users:   <input name = "SearchUser"/></label>
 			 				<input type="submit" value="Search User" />
@@ -91,10 +97,38 @@ try {
 						<form method="get" action="HelloWorld.jsp">
 			  				<input type="submit" value="Logout" />
 						</form>
-						<body>
+						<body>	
+						<form name = userForm method = get action = "HomePage.jsp">
+							<label>Search Users:   <input name = "SearchUser"/></label>
+			 				<input type="submit" value="Set User" />
+						</form>
 						<form method="get" action="rep_Browse.jsp">
-							<label>Browse Flights: <input name = "search"/></label>
-			 				 <input type="submit" value="Search" />
+							<label>Date for one way trip (yyyy-mm-dd): <input name = "search"/></label>
+							<label>Starting Airport(XXX): <input name = "airStart"/></label>
+							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
+							 <select name="flexibility by: " size=1>
+							<option value="0">No Flexibility</option>
+							<option value="1">One Day Flexibility</option>
+							<option value="2">Two Day Flexibility</option>
+							<option value="3">Three Day Flexibility</option>
+							
+							
+							</select>&nbsp;<br> <input type="submit" value="Submit">
+			 				<%-- <input type="submit" value="Search" />--%>
+						</form>
+						</body>
+						<form method="get" action="rep_Browse.jsp">
+							<label>Date for round start trip (yyyy-mm-dd): <input name = "search"/></label>
+							<label>Date for round end trip (yyyy-mm-dd): <input name = "search2"/></label>
+							<label>Starting Airport(XXX): <input name = "airStart"/></label>
+							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
+							<select name="flexibility by: " size=1>
+							<option value="0">No Flexibility</option>
+							<option value="1">One Day Flexibility</option>
+							<option value="2">Two Day Flexibility</option>
+							<option value="3">Three Day Flexibility</option>
+			 				</select>&nbsp;<br> <input type="submit" value="Submit">
+			 				<%-- <input type="submit" value="Search" />--%>
 						</form>
 						<form method="get" action="rep_UserInformation.jsp">
 							<label>Search User: <input name = "search"/></label>
