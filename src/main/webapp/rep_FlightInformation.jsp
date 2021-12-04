@@ -107,11 +107,11 @@ try {
 			 				 <input type="submit" value="edit" />
 						</form>
 					<%
-					str = "SELECT username FROM waitlist where flight_number = " + result.getInt("flight_number");
+					str = "SELECT * FROM waitlist where flight_number = " + result.getInt("flight_number");
 					result = stmt.executeQuery(str);
 					
 					out.print("Waiting List: </br>");
-					
+					out.print(str + "</br>");
 					while(result.next()){
 						out.print(result.getString("username") +", " + result.getInt("spot") + "</br>");
 					}
