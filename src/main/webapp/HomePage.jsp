@@ -82,7 +82,7 @@ try {
 						</form>
 						<body>
 						<form method="get" action="rep_Browse.jsp">
-							<label>Search Flights: <input name = "search"/></label>
+							<label>Browse Flights: <input name = "search"/></label>
 			 				 <input type="submit" value="Search" />
 						</form>
 						<form method="get" action="rep_UserInformation.jsp">
@@ -97,8 +97,8 @@ try {
 							<label>Search Airport: <input name = "search"/></label>
 			 				 <input type="submit" value="Search" />
 						</form>
-						<form method="get" action="rep_AirlineInformation.jsp">
-							<label>Search Airline: <input name = "search"/></label>
+						<form method="get" action="rep_AircraftInformation.jsp">
+							<label>Search Aircraft: <input name = "search"/></label>
 			 				 <input type="submit" value="Search" />
 						</form>
 						<form method="get" action="UserQuestions.jsp">
@@ -129,8 +129,10 @@ try {
 						</form>
 						</body>
 						<form method="get" action="Browse.jsp">
-							<label>Date for round start trip (yyyy-mm-dd): <input name = "dRoundSt"/></label>
-							<label>Date for round end trip (yyyy-mm-dd): <input name = "dRoundEnd"/></label>
+							<label>Date for round start trip (yyyy-mm-dd): <input name = "search"/></label>
+							<label>Date for round end trip (yyyy-mm-dd): <input name = "search2"/></label>
+							<label>Starting Airport(XXX): <input name = "airStart"/></label>
+							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
 							<select name="flexibility by: " size=1>
 							<option value="0">No Flexibility</option>
 							<option value="1">One Day Flexibility</option>
