@@ -73,8 +73,13 @@ try {
 								//out.print(wl);
 								
 								if(wl == true){
-									String insert = "INSERT INTO waitlist(flight_number, username) value ("
-											+ Collections.list(request.getParameterNames()).get(0) + ", \"" + session.getAttribute("user") + "\""+")"; //[increaments spot to check waitlist you can just say if the spot is less than any other spots that correspond to the flight number he is next in line]
+									str = "Select Max(spot) as spot from waitlist where flight_number = " + Collections.list(request.getParameterNames()).get(0);
+									
+									result = stmt.executeQuery(str);
+									result.next();
+									
+									String insert = "INSERT INTO waitlist(flight_number, username, spot) value ("
+											+ Collections.list(request.getParameterNames()).get(0) + ", \"" + session.getAttribute("user") + "\""+", " + (result.getInt("spot") + 1) +")"; //[increaments spot to check waitlist you can just say if the spot is less than any other spots that correspond to the flight number he is next in line]
 									 PreparedStatement ps = con.prepareStatement(insert);
 
 										//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
