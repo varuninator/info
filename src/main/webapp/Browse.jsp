@@ -64,7 +64,7 @@ try {
 				
 			ResultSet result = stmt.executeQuery(str);
 			while(result.next()){
-				out.print("Flight number:" + result.getInt("flight_number") + ", Time: " + result.getTime("departure_time") + ", Price: " + result.getInt("base_price"));
+				out.print("Flight number:" + result.getInt("flight_number") + ", Start: " + result.getString("departing_airport") + ", End: " + result.getString("arriving_airport") + ", Time: " + result.getTime("departure_time") + ", Price: " + result.getInt("base_price"));
 				%>
 				<form method="get" action="Book.jsp">
   				<input type="submit" value="Book" />
