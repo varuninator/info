@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Edit User information</title>
 </head>
 <body>
 <%
@@ -17,39 +17,26 @@ try {
 			Connection con = db.getConnection();
 			boolean search = false;
 			
-			//Create a SQL statement
 			Statement stmt = con.createStatement();
-			//Get the combobox from the index.jsp
 			
 			String sch = request.getParameter("search");
 			
 			if(sch != null){
 				session.setAttribute("search", sch);
 			}
-			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			//String str = "SELECT * FROM user";
-			
-			//Run the query against the database.
-			//ResultSet result = stmt.executeQuery(str);
-			
-						%>
-						
+					out.print("Current Username: " + session.getAttribute("userADsearch"));
+					%>
+					<br>					
 				 	<form method="get" >
-					<label>Change Username: <input name = "editusername"/></label>
-	 				 <input type="submit" value="New Username" />
+					<label>Change Username: <input name = "editedusername"/></label>
+	 				<input type="submit" value="New Username" />
 				    </form>
 				    <form method="get" >
-					<label>Change Password: <input name = "editpassword"/></label>
-	 				 <input type="submit" value="New Password" />
+					<label>Change Password: <input name = "editedpassword"/></label>
+	 				<input type="submit" value="New Password" />
 				    </form>
-				    
-						
-
-		
-				
-						<%
-					
-					
+					<%
+									
 } catch (Exception e) {
 	out.print(e);
 }
