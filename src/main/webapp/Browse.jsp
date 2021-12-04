@@ -50,16 +50,20 @@ try {
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 			//ONE way Search
 			String str = "";
+			
 			String orderby = "base_price";
-			if(request.getParameter("sort_by").equals("take-off time")){
-				orderby = "departure_time";
+			if(request.getParameter("sort_by") != null){
+				if(request.getParameter("sort_by").equals("take-off time")){
+					orderby = "departure_time";
+				}
+				if(request.getParameter("sort_by").equals("landing time")){
+					orderby = "arrival_time";
+				}
+				if(request.getParameter("sort_by").equals("duration of flight")){
+					orderby = "arrival_time-departure_time";
+				}
 			}
-			if(request.getParameter("sort_by").equals("landing time")){
-				orderby = "arrival_time";
-			}
-			if(request.getParameter("sort_by").equals("duration of flight")){
-				orderby = "arrival_time-departure_time";
-			}
+			
 			if(session.getAttribute("search2") == null){
 				if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
 					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\" order by " + orderby;
@@ -107,8 +111,9 @@ try {
   				<input type="submit" value="Book" onclick = <%="func" + count %>()/>
 				</form>
 				
-				<form method="get" action="Account.jsp">
-  				<input type="submit" value="Enter Waiting List" />
+				<form name = <%="form" + count %> method="get" action = "Account.jsp">
+				<input type = "hidden" name = <%=flight_num %>>
+  				<input type="submit" value="Join Waitlist" onclick = <%="func" + count %>()/>
 				</form>
 
 				<script language = "JavaScript">
