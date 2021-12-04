@@ -31,9 +31,10 @@ try {
 			}
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 			String str = "SELECT * FROM user";
-			
+			//String strFlight = "SELECT * FROM otrs.flight";
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
+			//ResultSet resultFlight = stmt.executeQuery(strFlight);
 			
 			while (result.next()) {
 				if((result.getString("username").equals(session.getAttribute("user")))&&result.getString("pass").equals(session.getAttribute("pass"))){
@@ -113,10 +114,33 @@ try {
 						</form>
 						<body>
 						<form method="get" action="Browse.jsp">
-							<label>Search Flights: <input name = "search"/></label>
-			 				 <input type="submit" value="Search" />
+							<label>Date for one way trip (yyyy-mm-dd): <input name = "search"/></label>
+							<label>Starting Airport(XXX): <input name = "airStart"/></label>
+							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
+							 <select name="flexibility by: " size=1>
+							<option value="0">No Flexibility</option>
+							<option value="1">One Day Flexibility</option>
+							<option value="2">Two Day Flexibility</option>
+							<option value="3">Three Day Flexibility</option>
+							
+							
+							</select>&nbsp;<br> <input type="submit" value="Submit">
+			 				<%-- <input type="submit" value="Search" />--%>
 						</form>
 						</body>
+						<form method="get" action="Browse.jsp">
+							<label>Date for round start trip (yyyy-mm-dd): <input name = "dRoundSt"/></label>
+							<label>Date for round end trip (yyyy-mm-dd): <input name = "dRoundEnd"/></label>
+							<select name="flexibility by: " size=1>
+							<option value="0">No Flexibility</option>
+							<option value="1">One Day Flexibility</option>
+							<option value="2">Two Day Flexibility</option>
+							<option value="3">Three Day Flexibility</option>
+			 				</select>&nbsp;<br> <input type="submit" value="Submit">
+			 				<%-- <input type="submit" value="Search" />--%>
+						</form>
+					
+						
 						<form method="get" action="Account.jsp">
 		  				<input type="submit" value="Account" />
 						</form>

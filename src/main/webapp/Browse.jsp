@@ -22,23 +22,24 @@ try {
 			//Get the combobox from the index.jsp
 			
 			String sch = request.getParameter("search");
-			
+			//String sch1 = request.getParameter("search");
+		
 			if(sch != null){
 				session.setAttribute("search", sch);
 			}
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			//String str = "SELECT * FROM user";
+			String str = "SELECT * FROM otrs.flight";
 			
 			//Run the query against the database.
-			//ResultSet result = stmt.executeQuery(str);
+			ResultSet result = stmt.executeQuery(str);
 			
 			
-			
+			out.print("You have selected the date " + sch + " do you want to book?");
 				
 			
 						%>
 						
-						<form method="get" action="HomePage.jsp">
+						<form method="get" action="rep_FlightInformation.jsp">
 							<label>Browse Flights: <input name = "browse"/></label>
 			 				 <input type="submit" value="Browse" />
 						</form>
