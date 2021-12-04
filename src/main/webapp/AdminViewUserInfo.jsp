@@ -43,16 +43,15 @@ try {
 				    %>
 				    <form method="get" action="EditUser.jsp"> 
 		  			<input type="submit" value="Edit User" />
-					</form>		
+					</form>	
+					<form method="get" action="DeleteUser.jsp"> 
+		  			<input type="submit" value="Delete User" />
+					</form>	
+					<br>	
 					<%
 					for(int i = 0; i<5; i++){ 
-						out.print("reservation " + i+ " \n");
+						out.print("reservation " + i+ "<br/>");
 					}
-					%>
-				    <form method="get" action="DeleteUser.jsp"> 
-		  			<input type="submit" value="Delete User" />
-					</form>		
-				    <%
 					}
 					
 				}
