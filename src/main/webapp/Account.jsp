@@ -27,9 +27,12 @@ try {
 			
 			//Run the query against the database.
 			//ResultSet result = stmt.executeQuery(str);
-			
-			
-			
+			String username = request.getParameter("user");
+			if(username != null){
+				session.setAttribute("user", username);
+			}
+			String str = "SELECT * FROM flys INNER JOIN aircraft ON aircraft.aircraft_id = flys.aircraft_id INNER JOIN flight ON flight.flight_number = flys.flight_number;";
+			ResultSet result = stmt.executeQuery(str);
 				
 			
 						%>
@@ -52,7 +55,31 @@ try {
 						
 				
 						<%
+						
+						 String insert = "INSERT INTO waitlist(flight_number, username) value ("
+								+ Collections.list(request.getParameterNames()).get(0) + ", \"" + session.getAttribute("user") + "\"" + ")";
+						
+						
+						
+						
+						//Create a Prepared SQL statement allowing you to introduce the parameters of the query
+						//out.print(insert);
+						PreparedStatement ps = con.prepareStatement(insert);
+
+						//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
+						
+						//Run the query against the DB
+						ps.executeUpdate();
+						
+						/* String up = "UPDATE otrs.waitlist SET spot = spot+1 WHERE flight_number =" + Collections.list(request.getParameterNames()).get(0);
+						PreparedStatement ps1 = con.prepareStatement(up);
+						
+						ps1.executeUpdate();*/
+						
+						
+						
 						out.print("Waiting List Pending");
+						//out.print(result.getInt("spot"));
 					
 } catch (Exception e) {
 	out.print(e);
