@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Home Page</title>
 </head>
 <body>
 <%
@@ -48,19 +48,30 @@ try {
 			  				<input type="submit" value="Logout" />
 						</form>
 						<body>
+						<br>
+						<form method="get" action="createAccount.jsp">
+							<label>Username: <input name = "user"/></label>
+							<label>Password: <input name = "pass"/></label>
+		  					<input type="submit" value="Create New User Account" />
+						</form>
+						</body>
+						<br>
+						<form method="get" action="AdminViewUserInfo.jsp">
+							<label>Search Users:   <input name = "SearchUser"/></label>
+			 				<input type="submit" value="Search User" />
+						</form>
+						<br>
 						<form method="get" action="FlightInfoAdminView.jsp">
 							<label>Search Flights:   <input name = "SearchFlight"/></label>
 			 				 <input type="submit" value="Search Flights" />
 						</form>
 						</body>
-						<form method="get" action="AdminViewUserInfo.jsp">
-							<label>Search Users:   <input name = "SearchUser"/></label>
-			 				 <input type="submit" value="Search User" />
-						</form>
+						<br>
 						<form method="get" action="AirlineInfoAdmin.jsp">
 							<label>Search Airlines: <input name = "SearchAirline"/></label>
 			 				 <input type="submit" value="Search Airline" />
 						</form>
+						<br>
 						<form method="get" > 
 		  				<input type="submit" value="Sales Report" />
 						</form>
