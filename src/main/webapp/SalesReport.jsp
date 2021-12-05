@@ -33,7 +33,11 @@ try {
             		usercounter++;
             	}
             }
-            if(usercounter >= 2){
+            if(usercounter == 0){
+            	out.print("There are no customers within the system: Cannot derive a single customer who brought in the most revenue at this time");
+	            out.print("<br/>");
+            }
+            else if(usercounter >= 2){
 	            calc = "SELECT u.username, COUNT(*) FROM otrs.user u, otrs.ticket t WHERE u.username = t.username GROUP BY u.username " +
 	            "HAVING COUNT(*) = (SELECT MAX(t1.flightsBooked) AS ticketMaxCustomer FROM (SELECT count(*) AS flightsBooked FROM otrs.user u, otrs.ticket t " +
 				"WHERE u.username = t.username GROUP BY u.username) AS t1);";
@@ -57,9 +61,11 @@ try {
             %>
             <br>
             <form method="get" action="SalesReport.jsp">
-                <label>Enter a month for the specific month's sales report (MM)): <input name = "SalesMonth"/></label>
-                <label>Enter a year for the specific month's sales report (YYYY): <input name = "SalesYear"/></label>
-                <input type="submit" value="Search Month" />
+            	<label>Enter a month and year for the specific month's sales report below </label>
+            	<br>
+                <label>Enter a month (MM)): <input name = "SalesMonth"/></label>
+                <label>Enter a year (YYYY): <input name = "SalesYear"/></label>
+                <input type="submit" value="Search Month's sales report" />
             </form>
             <br>
             <%
