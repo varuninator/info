@@ -83,14 +83,14 @@ try {
 				<br><br>
 				</body>
 				<%
-			}
+			} 
 			
 			while(result.next()) {
 				if(searchBy == null) {
 					break;
 				}
 				if(searchBy.equals("question")) {
-					if(result.getString("question_string").contains(k1) && result.getString("question_string").contains(k2) && result.getString("question_string").contains(k3)) {
+					if(result.getString("question_string").contains(k1.trim()) && result.getString("question_string").contains(k2.trim()) && result.getString("question_string").contains(k3.trim())) {
 						out.print("Question #" + result.getInt("question_number") + ": " + result.getString("question_string") + "?");
 						%>
 						<body>
@@ -107,7 +107,7 @@ try {
 				} else if(searchBy.equals("answer")) {
 					if(result.getString("answer_string").isEmpty()) {
 						continue;
-					} else if(result.getString("answer_string").contains(k1) && result.getString("answer_string").contains(k2) && result.getString("answer_string").contains(k3)) {
+					} else if(result.getString("answer_string").contains(k1.trim()) && result.getString("answer_string").contains(k2.trim()) && result.getString("answer_string").contains(k3.trim())) {
 						out.print("Question #" + result.getInt("question_number") + ": " + result.getString("question_string") + "?");
 						%>
 						<body>
