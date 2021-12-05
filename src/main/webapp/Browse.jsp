@@ -52,6 +52,20 @@ try {
 			String str = "";
 			
 			String orderby = "base_price";
+			String filter = "";
+			
+			if(request.getParameter("price_greater") != "" && request.getParameter("price_greater") != null){
+				filter += " and base_price > " + request.getParameter("price_greater");
+			}
+			if(request.getParameter("price_less") != "" && request.getParameter("price_less") != null){
+				filter += " and base_price < " + request.getParameter("price_less");
+			}
+			if(request.getParameter("take_off_before") != "" && request.getParameter("take_off_before") != null){
+				filter += " and time(departure_time) < \"" + request.getParameter("take_off_before") +"\"";
+			}
+			if(request.getParameter("land_off_before") != "" && request.getParameter("land_off_before")!= null){
+				filter += " and time(arrival_time) < \"" + request.getParameter("land_off_before") + "\"";
+			}
 			if(request.getParameter("sort_by") != null){
 				if(request.getParameter("sort_by").equals("take-off time")){
 					orderby = "departure_time";
@@ -66,32 +80,43 @@ try {
 			
 			if(session.getAttribute("search2") == null){
 				if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
-					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\" order by " + orderby;
+					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 				}else if (session.getAttribute("Start") != ""){
 					out.print(session.getAttribute("Start"));
-					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\" order by " + orderby;
+					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 				}else if (session.getAttribute("End") != ""){
-					str = "SELECT * FROM otrs.flight where arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\" order by " + orderby;
+					str = "SELECT * FROM otrs.flight where arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 				}else{
-					str = "SELECT * FROM otrs.flight where date(departure_time) = \"" + session.getAttribute("search") + "\" order by " + orderby;
+					str = "SELECT * FROM otrs.flight where date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 				}
 				//Run the query against the database.
 			// Round trip search
 			}else{
 				if(session.getAttribute("Start") != null && session.getAttribute("End") != null){
-					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\" order by " + orderby;
+					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 				}else if (session.getAttribute("Start") != null){
 					out.print(session.getAttribute("Start"));
-					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\" order by " + orderby;
+					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 				}else if (session.getAttribute("End") != null){
-					str = "SELECT * FROM otrs.flight where arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\" order by " + orderby;
+					str = "SELECT * FROM otrs.flight where arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search")  + "\"" + filter + " order by " + orderby;
 				}else{
-					str = "SELECT * FROM otrs.flight where date(departure_time) = \"" + session.getAttribute("search") + "\" order by " + orderby;
+					str = "SELECT * FROM otrs.flight where date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 				}
 			}
+
 			ResultSet result = stmt.executeQuery(str);
 			int count = 0;
+			
 			%>
+			<form name = userForm method = get action = "Browse.jsp">
+				<label>Prices greater than:  <input name = "price_greater"/></label>
+				<label>Prices less than   <input name = "price_less"/></label>
+				<label>Take off before:   <input name = "take_off_before"/></label>
+				<label>Land before:   <input name = "land_off_before"/></label>
+				<input type="submit" value="Filter" />
+			</form>
+			
+			
 			<form name = order method = get action = "Browse.jsp">
 				<select name="sort_by">
 					<option>price</option>

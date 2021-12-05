@@ -67,19 +67,37 @@ try {
 				result = stmt.executeQuery(str);
 				result.next();
 				
-				
+				int max_seat = result.getInt("seat_number");
 				/*str = "SELECT * FROM otrs.ticket";
 				result = stmt.executeQuery(str);
 				result.next();*/
-				String tix = "INSERT otrs.ticket (username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + "\"" + session.getAttribute("user") + "\""+", " + (result.getInt("seat_number") + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", false " + ", true" + ", false" + ")";
-				 //out.print(tix);
-				  ps = con.prepareStatement(tix);
-				 ps.executeUpdate();
-				 
-				String for_ = "INSERT otrs.for_ (flight_number) value (" + Collections.list(request.getParameterNames()).get(0)+ ")";
-				//out.print(for_);
-				ps = con.prepareStatement(for_);
-				 ps.executeUpdate();
+				String tix;
+				if(session.getAttribute("rep_user") != null){
+					str = "select * from user where username = \"" + session.getAttribute("rep_user") + "\"";
+					result = stmt.executeQuery(str);
+					result.next();
+					if(result.getString("username") != null){
+						tix = "INSERT otrs.ticket (username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + "\"" + session.getAttribute("rep_user") + "\""+", " + (max_seat + 1) + ", \"" + result.getString("first_name") + "\""+", " +  "\"" + result.getString("last_name") + "\"" + ", false " + ", true" + ", false" + ")";	
+						//out.print(tix);
+						  ps = con.prepareStatement(tix);
+						 ps.executeUpdate();
+						 
+						String for_ = "INSERT otrs.for_ (flight_number) value (" + Collections.list(request.getParameterNames()).get(0)+ ")";
+						//out.print(for_);
+						ps = con.prepareStatement(for_);
+						 ps.executeUpdate();
+					}
+				}else{
+					tix = "INSERT otrs.ticket (username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + "\"" + session.getAttribute("user") + "\""+", " + (result.getInt("seat_number") + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", false " + ", true" + ", false" + ")";	
+					//out.print(tix);
+					  ps = con.prepareStatement(tix);
+					 ps.executeUpdate();
+					 
+					String for_ = "INSERT otrs.for_ (flight_number) value (" + Collections.list(request.getParameterNames()).get(0)+ ")";
+					//out.print(for_);
+					ps = con.prepareStatement(for_);
+					 ps.executeUpdate();
+				}
 			}
 			else{
 				out.print("Booking error<br/>");
