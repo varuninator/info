@@ -108,7 +108,17 @@ try {
 				%>
 				<form name = <%="form" + count %> method="get" action = "Book.jsp">
 				<input type = "hidden" name = <%=flight_num %>>
-  				<input type="submit" value="Book" onclick = <%="func" + count %>()/>
+  				<input type="submit" value="Book First Class" onclick = <%="func" + count %>()/>
+				</form>
+				
+				<form name = <%="form" + count %> method="get" action = "BookSecond.jsp">
+				<input type = "hidden" name = <%=flight_num %>>
+  				<input type="submit" value="Book Business Class" onclick = <%="func" + count %>()/>
+				</form>
+				
+				<form name = <%="form" + count %> method="get" action = "BookThird.jsp">
+				<input type = "hidden" name = <%=flight_num %>>
+  				<input type="submit" value="Book Economy Class" onclick = <%="func" + count %>()/>
 				</form>
 				
 				<form name = <%="form" + count %> method="get" action = "Account.jsp">
