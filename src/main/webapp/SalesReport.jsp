@@ -19,8 +19,6 @@ try {
 
             //Create a SQL statement
             Statement stmt = con.createStatement();
-            //Get the combobox from the index.jsp
-            //String str = "SELECT * FROM user";
 
             //Run the query against the database.
             //ResultSet result = stmt.executeQuery(str);
@@ -28,8 +26,15 @@ try {
             String month = request.getParameter("SalesMonth");
             String year = request.getParameter("SalesYear");
             
-            
-			out.print("The customer who brought the most revenue is (username): " + "ENTER NAME HERE");
+            String calc = "SELECT u.username, COUNT(*) FROM otrs.user u, otrs.ticket t WHERE u.username = t.username GROUP BY u.username " +
+            "HAVING COUNT(*) = (SELECT MAX(t1.flightsBooked) AS ticketMaxCustomer FROM (SELECT count(*) AS flightsBooked FROM otrs.user u, otrs.ticket t " +
+			"WHERE u.username = t.username GROUP BY u.username) AS t1);";
+			
+			ResultSet result = stmt.executeQuery(calc);
+			result.next();
+			
+			out.print("The customer who brought the most revenue is (username): " + result.getString("username"));
+
             out.print("<br/>");
             %>
             <br>
@@ -45,12 +50,16 @@ try {
                 out.print("<br/>");
                 out.print("Sales Report for the month: " + month + " - " + year + "<br/>");
 
-                String calc = "SELECT SUM(30 * passengers) AS TRev FROM otrs.flight WHERE MONTH(departure_time) = \"" + month + "\" AND YEAR(departure_time) = \"" + year + "\"";
-                ResultSet result = stmt.executeQuery(calc);
+                calc = "SELECT SUM(30 * passengers) AS TRev FROM otrs.flight WHERE MONTH(departure_time) = \"" + month + "\" AND YEAR(departure_time) = \"" + year + "\"";
+                result = stmt.executeQuery(calc);
                 //out.print(calc);
                 result.next();
-                out.print("<br/>Revenue gained during " + month + " - " + year+ ": $" + result.getInt("Trev"));
-                out.print("<br/>Revenue gained during " + month + " - " + year+ ": $" + result.getInt("Trev"));
+                out.print("<br/>Revenue gained during: $" + result.getInt("Trev"));
+                
+                calc = "SELECT SUM(passengers) AS TotalPassengers FROM otrs.flight WHERE MONTH(departure_time) = \"" + month + "\" AND YEAR(departure_time) = \"" + year + "\"";
+                result = stmt.executeQuery(calc);
+                result.next();
+                out.print("<br/>Total tickets sold: " + result.getInt("TotalPassengers"));
 
 
 
