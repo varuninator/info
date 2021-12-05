@@ -23,6 +23,7 @@ try {
 			//Get the combobox from the index.jsp
 			String username = request.getParameter("user");
 			String password = request.getParameter("pass");
+			
 			if(username != null){
 				session.setAttribute("user", username);
 			}
@@ -44,10 +45,17 @@ try {
 			while (result.next()) {
 				if((result.getString("username").equals(session.getAttribute("user")))&&result.getString("pass").equals(session.getAttribute("pass"))){
 				 	loggedIn = true;
-				 	
+				 	if(result.getString("first_name") != null){
+						session.setAttribute("first", result.getString("first_name"));
+					}
+					if(result.getString("last_name") != null){
+						session.setAttribute("last", result.getString("last_name"));
+					}
 					if(result.getInt("type1")==(0)){
 						out.print("Welcome back " + result.getString("first_name") + " " + result.getString("last_name") + "!<br/>");
 						out.print("Clearence: Admin");
+						
+						
 						%>
 						<form method="get" action="HelloWorld.jsp">
 			  				<input type="submit" value="Logout" />

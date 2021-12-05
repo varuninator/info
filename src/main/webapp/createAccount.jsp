@@ -22,7 +22,8 @@
 		//Get parameters from the HTML form at the HelloWorld.jsp
 		String u = request.getParameter("user");
 		String p = request.getParameter("pass");
-
+		String f = request.getParameter("first");
+		String l = request.getParameter("last");
 
 		//Make an insert statement for the Sells table:
 		String insert = "INSERT INTO user(username, pass, type1, first_name, last_name)"
@@ -34,8 +35,8 @@
 		ps.setString(1,u);
 		ps.setString(2, p);
 		ps.setFloat(3, 2);
-		ps.setString(4, request.getParameter("first"));
-		ps.setString(5, request.getParameter("last"));
+		ps.setString(4, f);
+		ps.setString(5, l);
 		//Run the query against the DB
 		ps.executeUpdate();
 

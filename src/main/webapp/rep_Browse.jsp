@@ -55,6 +55,9 @@ try {
 				//ONE way Search
 				String str = "";
 				out.print("Current User: " + session.getAttribute("rep_user") + "</br>");
+				
+				
+				
 				String orderby = "base_price";
 				if(request.getParameter("sort_by") != null){
 					if(request.getParameter("sort_by").equals("take-off time")){

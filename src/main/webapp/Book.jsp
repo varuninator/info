@@ -37,6 +37,8 @@ try {
 			//int count = 1;
 			
 			
+			
+			
 			 while (result.next()) {
 				if(result.getString("flight_number").equals(Collections.list(request.getParameterNames()).get(0)) &&  result.getInt("passengers")<result.getInt("number_of_seats")){ //count attribute on flight?
 						
@@ -52,7 +54,7 @@ try {
 			
 			if(booked==true){
 				out.print("You have been booked");
-			
+				
 				
 				
 				String up = "UPDATE otrs.flight SET passengers = passengers+1 WHERE flight_number =" + Collections.list(request.getParameterNames()).get(0);
@@ -60,9 +62,15 @@ try {
 				
 				ps.executeUpdate();
 				
+				/*String tix = "INSERT otrs.ticket (seat_number, first_name, last_name) value (" + result.getInt("seat_number") + ", \"" + session.getAttribute("user") + "\""+", " + (result.getInt("spot") + 1) +")";
+				  ps = con.prepareStatement(tix);
+				 ps.executeUpdate();*/
+				 out.print(session.getAttribute("first_name"));
+				
+				
 			}
 			else{
-				out.print("Booking error, try waitlisting");
+				out.print("Booking error");
 			}
 			
 			
