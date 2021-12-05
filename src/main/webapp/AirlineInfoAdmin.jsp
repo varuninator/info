@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Airline Information Admin</title>
 </head>
 <body>
 <%
@@ -31,19 +31,14 @@ try {
 			
 			//Run the query against the database.
 			//ResultSet result = stmt.executeQuery(str);
+						out.print("Nothing to see here");
 						%>					
-						<form method="get" action="HomePage.jsp">
-							<label>Browse Flights: <input name = "browse"/></label>
-			 				 <input type="submit" value="Browse" />
-						</form>
+					
 						
-						<form method="get" action="Book.jsp">
-		  				<input type="submit" value="Book" />
+						<form method="get">
+		  				<input type="submit" value="This button does nothing" />
 						</form>
-						
-						<form method="get" action="Account.jsp">
-		  				<input type="submit" value="Enter Waiting List" />
-						</form>	
+					
 						<%			
 } catch (Exception e) {
 	out.print(e);
