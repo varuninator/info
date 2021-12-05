@@ -34,7 +34,6 @@ try {
             	}
             }
             if(usercounter >= 2){
-            	out.print("oh no..........its browken,<br/>");
 	            calc = "SELECT u.username, COUNT(*) FROM otrs.user u, otrs.ticket t WHERE u.username = t.username GROUP BY u.username " +
 	            "HAVING COUNT(*) = (SELECT MAX(t1.flightsBooked) AS ticketMaxCustomer FROM (SELECT count(*) AS flightsBooked FROM otrs.user u, otrs.ticket t " +
 				"WHERE u.username = t.username GROUP BY u.username) AS t1);";
@@ -58,28 +57,42 @@ try {
             %>
             <br>
             <form method="get" action="SalesReport.jsp">
-                 <label for="start">Start month:</label> 
                 <label>Enter a month for the specific month's sales report (MM)): <input name = "SalesMonth"/></label>
                 <label>Enter a year for the specific month's sales report (YYYY): <input name = "SalesYear"/></label>
                 <input type="submit" value="Search Month" />
             </form>
             <br>
             <%
-            if((month != null) || (year != null)){
-                out.print("<br/>");
-                out.print("Sales Report for the month: " + month + " - " + year + "<br/>");
-
-                calc = "SELECT SUM(30 * passengers) AS TRev FROM otrs.flight WHERE MONTH(departure_time) = \"" + month + "\" AND YEAR(departure_time) = \"" + year + "\"";
-                result = stmt.executeQuery(calc);
-                //out.print(calc);
-                result.next();
-                out.print("<br/>Revenue gained during: $" + result.getInt("Trev"));
-                
-                calc = "SELECT SUM(passengers) AS TotalPassengers FROM otrs.flight WHERE MONTH(departure_time) = \"" + month + "\" AND YEAR(departure_time) = \"" + year + "\"";
-                result = stmt.executeQuery(calc);
-                result.next();
-                out.print("<br/>Total tickets sold: " + result.getInt("TotalPassengers"));
+            if ((month != null) || (year != null)){
+	            if((month.trim().isEmpty()) && (!year.trim().isEmpty())){
+	                out.print("<br/>Please enter a month for " + year + " and try again.");
+	            }
+	            else if((!month.trim().isEmpty()) && (year.trim().isEmpty())){
+	                out.print("<br/>Please enter a year for month " + month + " and try again.");
+	            }
+	            else if((!month.trim().isEmpty()) && (!year.trim().isEmpty())){
+	                out.print("<br/>Sales Report for the month: " + month + " - " + year + "<br/>");
+	
+	                calc = "SELECT SUM(30 * passengers) AS TRev FROM otrs.flight WHERE MONTH(departure_time) = \"" + month + "\" AND YEAR(departure_time) = \"" + year + "\"";
+	                result = stmt.executeQuery(calc);
+	                result.next();
+	                out.print("<br/>Revenue gained during: $" + result.getInt("Trev"));
+	                
+	                calc = "SELECT SUM(passengers) AS TotalPassengers FROM otrs.flight WHERE MONTH(departure_time) = \"" + month + "\" AND YEAR(departure_time) = \"" + year + "\"";
+	                result = stmt.executeQuery(calc);
+	                result.next();
+	                out.print("<br/>Total tickets sold: " + result.getInt("TotalPassengers"));
+	            }
+	            else if((month.trim().isEmpty()) && (year.trim().isEmpty())){
+	            	out.print("<br/>Please enter a month (MM) and year (YYYY) above and try again.");
+	            }
             }
+            %>
+            <br>
+            <form method="get" action="HomePage.jsp">
+		  	<input type="submit" value="Go directly back to home page" />
+			</form>
+            <%
 
 
 } catch (Exception e) {

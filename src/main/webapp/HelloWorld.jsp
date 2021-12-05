@@ -9,8 +9,22 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Login</title>
 	</head>
-	
+
 	<body>
+	<%
+	out.print("Welcome!<br/><br/>Login Below:<bre/>");
+	%>
+		<br>
+		<form method="get" action="HomePage.jsp">
+			<label>Username: <input name = "user"/></label>
+			<label>Password: <input name = "pass"/></label>
+		  <input type="submit" value="Login" />
+		</form>
+		<br>
+		<br>
+	<% 
+	out.print("Dont have an account with us?<br/>Dont worry! Create one below:<br/><br/>(Maximum of 50 characters are allowed for each)");
+	%>
 		<form method="get" action="createAccount.jsp">
 			<label>Username: <input name = "user"/></label>
 			<label>Password: <input name = "pass"/></label>
@@ -18,11 +32,7 @@
 			<label>Last Name: <input name = "last"/></label>
 		  <input type="submit" value="Create Account" />
 		</form>
-		<br>
-		<form method="get" action="HomePage.jsp">
-			<label>Username: <input name = "user"/></label>
-			<label>Password: <input name = "pass"/></label>
-		  <input type="submit" value="Login" />
-		</form>
+		<%
+	%>
 	</body>
 </html>
