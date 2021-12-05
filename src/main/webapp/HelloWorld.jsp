@@ -18,6 +18,7 @@
 			<label>Last Name: <input name = "last"/></label>
 		  <input type="submit" value="Create Account" />
 		</form>
+		<br>
 		<form method="get" action="HomePage.jsp">
 			<label>Username: <input name = "user"/></label>
 			<label>Password: <input name = "pass"/></label>

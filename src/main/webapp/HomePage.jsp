@@ -45,9 +45,9 @@ try {
 				if((result.getString("username").equals(session.getAttribute("user")))&&result.getString("pass").equals(session.getAttribute("pass"))){
 				 	loggedIn = true;
 				 	
-					out.print("You are currently logged in as  "+ session.getAttribute("user"));
 					if(result.getInt("type1")==(0)){
-						out.print(" and are an admin.");
+						out.print("Welcome back " + result.getString("first_name") + " " + result.getString("last_name") + "!<br/>");
+						out.print("Clearence: Admin");
 						%>
 						<form method="get" action="HelloWorld.jsp">
 			  				<input type="submit" value="Logout" />
@@ -57,6 +57,8 @@ try {
 						<form method="get" action="createAccount.jsp">
 							<label>Username: <input name = "user"/></label>
 							<label>Password: <input name = "pass"/></label>
+							<label>First Name: <input name = "first"/></label>
+							<label>Last Name: <input name = "last"/></label>
 		  					<input type="submit" value="Create New User Account" />
 						</form>
 						</body>
@@ -92,14 +94,16 @@ try {
 					}
 
 					else if(result.getInt("type1")==1){
-						out.print(" and are a customer representative.");
+						out.print("Welcome back " + result.getString("first_name") + " " + result.getString("last_name") + "!<br/>");
+						out.print("Clearence: Customer Repersentative");
 						%>
 						<form method="get" action="HelloWorld.jsp">
 			  				<input type="submit" value="Logout" />
 						</form>
+						<br>
 						<body>	
 						<form name = userForm method = get action = "HomePage.jsp">
-							<label>Search Users:   <input name = "SearchUser"/></label>
+							<label>Pick User:   <input name = "SearchUser"/></label>
 			 				<input type="submit" value="Set User" />
 						</form>
 						<form method="get" action="rep_Browse.jsp">
@@ -111,8 +115,6 @@ try {
 							<option value="1">One Day Flexibility</option>
 							<option value="2">Two Day Flexibility</option>
 							<option value="3">Three Day Flexibility</option>
-							
-							
 							</select>&nbsp;<br> <input type="submit" value="Submit">
 			 				<%-- <input type="submit" value="Search" />--%>
 						</form>
@@ -130,6 +132,7 @@ try {
 			 				</select>&nbsp;<br> <input type="submit" value="Submit">
 			 				<%-- <input type="submit" value="Search" />--%>
 						</form>
+						<br>
 						<form method="get" action="rep_UserInformation.jsp">
 							<label>Search User: <input name = "search"/></label>
 			 				 <input type="submit" value="Search" />
@@ -146,17 +149,20 @@ try {
 							<label>Search Aircraft: <input name = "search"/></label>
 			 				 <input type="submit" value="Search" />
 						</form>
+						<br>
 						<form method="get" action="RepBrowseQuestions.jsp">
 			  				<input type="submit" value="Browse User Questions" />
 						</form>
 						<%
 					}
 					else{
-						out.print(" and are a customer.");
+						out.print("Welcome back " + result.getString("first_name") + " " + result.getString("last_name") + "!<br/>");
+						out.print("Clearence: Customer");
 						%>
 						<form method="get" action="HelloWorld.jsp">
 			  				<input type="submit" value="Logout" />
 						</form>
+						<br>
 						<body>
 						<form method="get" action="Browse.jsp">
 							<label>Date for one way trip (yyyy-mm-dd): <input name = "search"/></label>
@@ -172,6 +178,7 @@ try {
 							</select>&nbsp;<br> <input type="submit" value="Submit">
 			 				<%-- <input type="submit" value="Search" />--%>
 						</form>
+						<br>
 						</body>
 						<form method="get" action="Browse.jsp">
 							<label>Date for round start trip (yyyy-mm-dd): <input name = "search"/></label>
@@ -186,22 +193,17 @@ try {
 			 				</select>&nbsp;<br> <input type="submit" value="Submit">
 			 				<%-- <input type="submit" value="Search" />--%>
 						</form>
-					
-						
+					    <br>
 						<form method="get" action="Account.jsp">
-		  				<input type="submit" value="Account" />
+		  				<input type="submit" value="Account Info" />
 						</form>
 						<form method="get" action="UserQuestions.jsp">
-		  				<input type="submit" value="Questions" />
+		  				<input type="submit" value="Ask Questions!" />
 						</form>
 						<%
 					}
 					
 				}
-				
-				
-		
-				//out.print(result.getString("username")+ "\n");
 			}
 			
 			if(!loggedIn){
@@ -212,11 +214,7 @@ try {
 				</form>
 				<%
 			}
-			
-		
-			
-			
-			
+					
 } catch (Exception e) {
 	out.print(e);
 }

@@ -17,23 +17,30 @@ try {
 			Connection con = db.getConnection();
 			boolean search = false;
 			
+		
+			//*add while loop later to find user on datatbase to display all relavent ifo except password*
+			
+			
+			
 			Statement stmt = con.createStatement();
-			
-			String sch = request.getParameter("search");
-			
-			if(sch != null){
-				session.setAttribute("search", sch);
-			}
 					out.print("Current Username: " + session.getAttribute("userADsearch"));
 					%>
 					<br>					
-				 	<form method="get" >
+				 	<form method="get" action="editingInfo.jsp">
 					<label>Change Username: <input name = "editedusername"/></label>
 	 				<input type="submit" value="New Username" />
 				    </form>
 				    <form method="get" >
 					<label>Change Password: <input name = "editedpassword"/></label>
 	 				<input type="submit" value="New Password" />
+				    </form>
+				    <form method="get" >
+					<label>Change First Name: <input name = "editedFName"/></label>
+	 				<input type="submit" value="New First Name" />
+				    </form>
+				    <form method="get" >
+					<label>Change Last Name: <input name = "editedLName"/></label>
+	 				<input type="submit" value="New Last Name" />
 				    </form>
 					<%
 									
