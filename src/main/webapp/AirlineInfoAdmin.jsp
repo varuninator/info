@@ -15,22 +15,20 @@
 try {
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();
-			boolean search = false;
-			
+
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			//Get the combobox from the index.jsp
 
 			//String str = "SELECT * FROM user";
-			
-			//Run the query against the database.
+
 			//ResultSet result = stmt.executeQuery(str);
 						out.print("Nothing to see here");
 						%>					
 					
 						
-						<form method="get">
-		  				<input type="submit" value="This button does nothing" />
+						<form method="get" action="HomePage.jsp">
+		  				<input type="submit" value="This button does nothing (or does it)" />
 						</form>
 					
 						<%			

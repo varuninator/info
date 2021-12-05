@@ -44,6 +44,11 @@ try {
 					<label>Change Last Name: <input name = "editedLName"/></label>
 	 				<input type="submit" value="New Last Name" />
 				    </form>
+				    <br>
+				    <br>
+				    <form method="get" action="HomePage.jsp">
+			  				<input type="submit" value="Back to home page" />
+					</form>
 					<%
 									
 } catch (Exception e) {

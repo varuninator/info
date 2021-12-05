@@ -15,25 +15,44 @@
 try {
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();
-			boolean search = false;
+			boolean flightExist = false;
 			
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
-			//Get the combobox from the index.jsp
 			
-			String sch = request.getParameter("search");
+			String str = "SELECT * FROM flight";
+			ResultSet result = stmt.executeQuery(str);
 			
-			if(sch != null){
-				session.setAttribute("search", sch);
+			while (result.next()) {
+				if((String.valueOf(result.getInt("flight_number")).equals(request.getParameter("SearchFlight")))){
+					flightExist = true;
+					%>
+				 	<form method="get" action="FlightInfoAdminView.jsp">
+					<label>Search another Flight: <input name = "SearchFlight"/></label>
+	 				 <input type="submit" value="Search Flight" />
+				    </form>
+				    <br>
+				    <%
+				    
+				    str = "SELECT SUM(30 * passengers) AS TRev FROM flight WHERE flight(flight_number) = \"" + request.getParameter("SearchFlight") + "\"";
+				    result = stmt.executeQuery(str);
+	                result.next();
+				    
+				    out.print("FLIGHT: #" + result.getInt("flight_number") + "<br/>");
+				    out.print("The total revenue from flight is: $" + result.getInt("Trev"));
+				    out.print("<br/><br/>ALL flight reservations for this flight:");
+				}
 			}
-			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			//String str = "SELECT * FROM user";
+			if(!flightExist){
+				out.print("This Flight does not exist. Try again.");
+				%>
+				<form method="get" action="HomePage.jsp">
+	  				<input type="submit" value="Try Again" />
+				</form>
+				<%
+			}
 			
-			//Run the query against the database.
-			//ResultSet result = stmt.executeQuery(str);
-			for(int i = 0; i<5; i++){ 
-				out.print("reservation " + i+ " \n");
-			}		
+			
 } catch (Exception e) {
 	out.print(e);
 }

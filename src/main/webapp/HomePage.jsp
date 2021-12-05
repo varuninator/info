@@ -45,16 +45,17 @@ try {
 			while (result.next()) {
 				if((result.getString("username").equals(session.getAttribute("user")))&&result.getString("pass").equals(session.getAttribute("pass"))){
 				 	loggedIn = true;
+				 	
 				 	if(result.getString("first_name") != null){
 						session.setAttribute("first", result.getString("first_name"));
 					}
 					if(result.getString("last_name") != null){
 						session.setAttribute("last", result.getString("last_name"));
 					}
+									
 					if(result.getInt("type1")==(0)){
 						out.print("Welcome back " + result.getString("first_name") + " " + result.getString("last_name") + "!<br/>");
-						out.print("Clearence: Admin");
-						
+						out.print("Clearence: Admin<br/>Username: " + result.getString("username"));
 						
 						%>
 						<form method="get" action="HelloWorld.jsp">
@@ -103,7 +104,7 @@ try {
 
 					else if(result.getInt("type1")==1){
 						out.print("Welcome back " + result.getString("first_name") + " " + result.getString("last_name") + "!<br/>");
-						out.print("Clearence: Customer Repersentative");
+						out.print("Clearence: Customer Repersentative<br/>Username: " + result.getString("username"));
 						%>
 						<form method="get" action="HelloWorld.jsp">
 			  				<input type="submit" value="Logout" />
@@ -165,7 +166,7 @@ try {
 					}
 					else{
 						out.print("Welcome back " + result.getString("first_name") + " " + result.getString("last_name") + "!<br/>");
-						out.print("Clearence: Customer");
+						out.print("Clearence: Customer<br/>Username: " + result.getString("username"));
 						%>
 						<form method="get" action="HelloWorld.jsp">
 			  				<input type="submit" value="Logout" />

@@ -24,10 +24,8 @@ try {
 			if(username != null){
 				session.setAttribute("userADsearch", username);
 			}
-			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
+
 			String str = "SELECT * FROM user";
-			
-			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
 			
 			while (result.next()) {
@@ -38,6 +36,7 @@ try {
 					<label>Search another User: <input name = "SearchUser"/></label>
 	 				 <input type="submit" value="Search User" />
 				    </form>
+				    <br>
 				    <%
 					out.print("User:  "+ session.getAttribute("userADsearch"));
 				    %>
@@ -52,9 +51,9 @@ try {
 					for(int i = 0; i<5; i++){ 
 						out.print("reservation " + i+ "<br/>");
 					}
-					}
-					
 				}
+					
+			}
 			
 			if(!userExist){
 				out.print("This user does not exist. Try again.");
