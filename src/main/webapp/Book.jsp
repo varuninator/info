@@ -71,7 +71,7 @@ try {
 				/*str = "SELECT * FROM otrs.ticket";
 				result = stmt.executeQuery(str);
 				result.next();*/
-				String tix = "INSERT otrs.ticket (seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + (result.getInt("seat_number") + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", true " + ", false" + ", false" + ")";
+				String tix = "INSERT otrs.ticket (username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + "\"" + session.getAttribute("user") + "\""+", " + (result.getInt("seat_number") + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", true " + ", false" + ", false" + ")";
 				 //out.print(tix);
 				  ps = con.prepareStatement(tix);
 				 ps.executeUpdate();
