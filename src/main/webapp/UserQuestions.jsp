@@ -28,7 +28,7 @@ try {
 			//Run the query against the database.
 			//ResultSet result = stmt.executeQuery(str);
 			
-
+			//be able to search questions and answers by keywords
 
 						%>
 						<form method="get" action="UserQuestionAsked.jsp">
@@ -39,7 +39,24 @@ try {
 						<form method="get" action="UserBrowseQuestions.jsp">
 			 				 <input type="submit" value="Browse Questions" />
 						</form>
-				
+						<br>
+						<br>
+			
+						<form method="get" action="UserSearchByKeywords.jsp">
+							<input type="radio" id="q" name="searchBy" value="question">
+							<label for="q">Search by question keyword(s)</label>
+							<br>
+							<input type="radio" id="a" name="searchBy" value="answer">
+							<label for="a">Search by answer keyword(s)</label>
+							<br><br>
+							<label>Enter 1st Keyword: <input name = "keyword_1"/></label>
+			 				<br>
+			 				<label>Enter 2nd Keyword: <input name = "keyword_2"/></label>
+			 				<br>
+			 				<label>Enter 3rd Keyword: <input name = "keyword_3"/></label>
+			 				<br><br>
+			 				<input type="submit" value="Search by Keywords" />						
+			 			</form>
 						<%
 					
 } catch (Exception e) {

@@ -31,8 +31,6 @@
 		String up = "UPDATE otrs.question_answer SET answer_string = \"" + a + "\"" + " WHERE question_number =" + Collections.list(request.getParameterNames()).get(1);
 		PreparedStatement ps = con.prepareStatement(up);
 		//out.print(up);
-		//com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'answer' in 'where clause'
-		//http://localhost:8080/info/RepQuestionAnswered.jsp?answer=we+are+happy&5=
 		ps.executeUpdate();
 		
 		out.print("Question answered!");
