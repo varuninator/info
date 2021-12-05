@@ -88,7 +88,7 @@ try {
 			 				 <input type="submit" value="Search Airline" />
 						</form>
 						<br>
-						<form method="get" > 
+						<form method="get" action="SalesReport.jsp"> 
 		  				<input type="submit" value="Sales Report" />
 						</form>
 						<form method="get" action="UserList.jsp" > 
