@@ -202,7 +202,7 @@ try {
 			 				<%-- <input type="submit" value="Search" />--%>
 						</form>
 					    <br>
-						<form method="get" action="Account.jsp">
+						<form method="get" action="AccountInfo.jsp">
 		  				<input type="submit" value="Account Info" />
 						</form>
 						<form method="get" action="UserQuestions.jsp">
