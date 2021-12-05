@@ -20,22 +20,41 @@ try {
             //Create a SQL statement
             Statement stmt = con.createStatement();
 
-            //Run the query against the database.
-            //ResultSet result = stmt.executeQuery(str);
-
             String month = request.getParameter("SalesMonth");
             String year = request.getParameter("SalesYear");
             
-            String calc = "SELECT u.username, COUNT(*) FROM otrs.user u, otrs.ticket t WHERE u.username = t.username GROUP BY u.username " +
-            "HAVING COUNT(*) = (SELECT MAX(t1.flightsBooked) AS ticketMaxCustomer FROM (SELECT count(*) AS flightsBooked FROM otrs.user u, otrs.ticket t " +
-			"WHERE u.username = t.username GROUP BY u.username) AS t1);";
+			String calc = "SELECT * FROM user";
 			
+			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(calc);
-			result.next();
-			
-			out.print("The customer who brought the most revenue is (username): " + result.getString("username"));
-
-            out.print("<br/>");
+			int usercounter = 0;
+            while(result.next()){
+            	if((result.getInt("type1") != 0) && (result.getInt("type1") != 1)){ 
+            		usercounter++;
+            	}
+            }
+            if(usercounter >= 2){
+            	out.print("oh no..........its browken,<br/>");
+	            calc = "SELECT u.username, COUNT(*) FROM otrs.user u, otrs.ticket t WHERE u.username = t.username GROUP BY u.username " +
+	            "HAVING COUNT(*) = (SELECT MAX(t1.flightsBooked) AS ticketMaxCustomer FROM (SELECT count(*) AS flightsBooked FROM otrs.user u, otrs.ticket t " +
+				"WHERE u.username = t.username GROUP BY u.username) AS t1);";
+				
+				result = stmt.executeQuery(calc);
+				result.next();
+				
+				out.print("The customer who brought the most revenue is (username): " + result.getString("username"));
+	            out.print("<br/>");
+            }else{
+            	calc = "SELECT * FROM user";
+            	result = stmt.executeQuery(calc);
+            	while(result.next()){
+                	if((result.getInt("type1") != 0) && (result.getInt("type1") != 1)){ 
+                		out.print("The customer who brought the most revenue is (username): " + result.getString("username"));
+                    	out.print("<br/>");
+                    	break;
+                	}
+                }
+            }
             %>
             <br>
             <form method="get" action="SalesReport.jsp">
@@ -60,9 +79,6 @@ try {
                 result = stmt.executeQuery(calc);
                 result.next();
                 out.print("<br/>Total tickets sold: " + result.getInt("TotalPassengers"));
-
-
-
             }
 
 
