@@ -7,34 +7,38 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Airline Information</title>
+<title>Sales Report</title>
 </head>
 <body>
-	<%
+<%
+//Get the database connection
 try {
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();
-
+			boolean search = false;
 			
-	%>
-	<body>
-	<label>Insert Name of Current Airline from Query</label>
-	</body>
-	<form method="get" action="HomePage.jsp">
-		<label>Show Airline Revenue:</label> <input
-			type="submit" value="Show" />
-	</form>
-	<form method="get" action="HomePage.jsp">
-		<input type="submit" value="Back" />
-	</form>
-
-	<%
+			//Create a SQL statement
+			Statement stmt = con.createStatement();
+			//Get the combobox from the index.jsp
+			
+			
+		
+			//String str = "SELECT * FROM user";
+			
+			//Run the query against the database.
+			//ResultSet result = stmt.executeQuery(str);
+						out.print("Nothing to see here");
+						%>					
 					
+						
+						<form method="get">
+		  				<input type="submit" value="This button does nothing" />
+						</form>
 					
+						<%			
 } catch (Exception e) {
 	out.print(e);
 }
-			%>
-
+			%>		
 </body>
 </html>

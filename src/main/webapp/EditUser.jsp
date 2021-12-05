@@ -11,34 +11,36 @@
 </head>
 <body>
 <%
-//Get the database connection
 try {
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();
-			boolean search = false;
-			
-		
-			//*add while loop later to find user on datatbase to display all relavent ifo except password*
-			
-			
-			
 			Statement stmt = con.createStatement();
-					out.print("Current Username: " + session.getAttribute("userADsearch"));
+			String str = "SELECT * FROM user";
+			ResultSet result = stmt.executeQuery(str);
+			
+			while (result.next()) {
+				if((result.getString("username").equals(session.getAttribute("userADsearch")))){
+					out.print("Current Username: " + session.getAttribute("userADsearch") + "<br/>");
+					out.print("Current Password: " + result.getString("pass") + "<br/>");
+					out.print("Current First Name: " + result.getString("first_name") + "<br/>");
+					out.print("Current Last Name: " + result.getString("last_name") + "<br/>");
+					}
+				}
 					%>
 					<br>					
 				 	<form method="get" action="editingInfo.jsp">
 					<label>Change Username: <input name = "editedusername"/></label>
 	 				<input type="submit" value="New Username" />
 				    </form>
-				    <form method="get" >
+				    <form method="get" action="editingInfo.jsp">
 					<label>Change Password: <input name = "editedpassword"/></label>
 	 				<input type="submit" value="New Password" />
 				    </form>
-				    <form method="get" >
+				    <form method="get" action="editingInfo.jsp">
 					<label>Change First Name: <input name = "editedFName"/></label>
 	 				<input type="submit" value="New First Name" />
 				    </form>
-				    <form method="get" >
+				    <form method="get" action="editingInfo.jsp">
 					<label>Change Last Name: <input name = "editedLName"/></label>
 	 				<input type="submit" value="New Last Name" />
 				    </form>
