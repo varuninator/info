@@ -20,13 +20,7 @@ try {
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			//Get the combobox from the index.jsp
-			
-			String sch = request.getParameter("search");
-			
-			if(sch != null){
-				session.setAttribute("search", sch);
-			}
-			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
+
 			//String str = "SELECT * FROM user";
 			
 			//Run the query against the database.
