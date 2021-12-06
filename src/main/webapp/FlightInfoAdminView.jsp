@@ -20,6 +20,8 @@ try {
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			
+            String flightNum = request.getParameter("SearchFlight");
+            
 			String str = "SELECT * FROM flight";
 			ResultSet result = stmt.executeQuery(str);
 			
@@ -34,11 +36,10 @@ try {
 				    <br>
 				    <%
 				    
-				    str = "SELECT SUM(30 * passengers) AS TRev FROM flight WHERE flight(flight_number) = \"" + request.getParameter("SearchFlight") + "\"";
+				    str = "SELECT SUM(30 * passengers) AS TRev FROM otrs.flight f WHERE f.flight_number = \"" + flightNum + "\"";
 				    result = stmt.executeQuery(str);
 	                result.next();
-				    
-				    out.print("FLIGHT: #" + result.getInt("flight_number") + "<br/>");
+				    out.print("FLIGHT: #" + flightNum + "<br/>");
 				    out.print("The total revenue from flight is: $" + result.getInt("Trev"));
 				    out.print("<br/><br/>ALL flight reservations for this flight:");
 				}
