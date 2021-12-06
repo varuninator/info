@@ -88,7 +88,7 @@ try {
 						 ps.executeUpdate();
 					}
 				}else{
-					tix = "INSERT otrs.ticket (username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + "\"" + session.getAttribute("user") + "\""+", " + (result.getInt("seat_number") + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", false " + ", true" + ", false" + ")";	
+					tix = "INSERT otrs.ticket (user_delete, flight_number, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\"" + ", \"" + session.getAttribute("user") + "\""+", " + (result.getInt("seat_number") + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", false " + ", true" + ", false" + ")";	
 					//out.print(tix);
 					  ps = con.prepareStatement(tix);
 					 ps.executeUpdate();
