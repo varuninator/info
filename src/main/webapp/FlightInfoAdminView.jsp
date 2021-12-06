@@ -36,12 +36,18 @@ try {
 				    <br>
 				    <%
 				    
-				    str = "SELECT SUM(30 * passengers) AS TRev FROM otrs.flight f WHERE f.flight_number = \"" + flightNum + "\"";
+				    //str = "SELECT SUM(30 * passengers) AS TRev FROM otrs.flight f WHERE f.flight_number = \"" + flightNum + "\"";
+				    str = "SELECT SUM(30 * id_num) AS TRev FROM otrs.ticket t WHERE  t.id_num = \"" + flightNum + "\"";
+			   
 				    result = stmt.executeQuery(str);
 	                result.next();
 				    out.print("FLIGHT: #" + flightNum + "<br/>");
-				    out.print("The total revenue from flight is: $" + result.getInt("Trev"));
-				    out.print("<br/><br/>ALL flight reservations for this flight:");
+				    out.print("The total revenue from flight is: $" + result.getInt("TRev"));
+				    out.print("<br/><br/>ALL flight reservations for this flight:<br/>");
+				    
+				    /* str = "SELECT SUM(30 * passengers) AS TRev FROM otrs.flight f WHERE f.flight_number = \"" + flightNum + "\""; */
+				    
+				    break;
 				}
 			}
 			if(!flightExist){
