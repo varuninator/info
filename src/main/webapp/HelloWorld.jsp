@@ -12,7 +12,7 @@
 
 	<body>
 	<%
-	out.print("Welcome!<br/><br/>Login Below:<bre/>");
+	out.print("Welcome to Breakaway Booking Agency!<br/><br/>Login Below:<bre/>");
 	%>
 		<br>
 		<form method="get" action="HomePage.jsp">

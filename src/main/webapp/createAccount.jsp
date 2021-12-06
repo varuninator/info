@@ -45,8 +45,22 @@
 
 		out.print("Account Created!");
 	} catch (Exception ex) {
-		out.print(ex);
-		out.print("Insert failed :()");
+		if (String.valueOf(ex).equals("com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry '"+ request.getParameter("user") + "' for key 'user.PRIMARY'")){
+			out.print("Failed to create an account: Username already exists. Try again");
+		}
+		else if (String.valueOf(ex).equals("com.mysql.jdbc.MysqlDataTruncation: Data truncation: Data too long for column 'username' at row 1")){
+		out.print("Failed to create an account: Username is too long. Try again");
+		}
+		else if (String.valueOf(ex).equals("com.mysql.jdbc.MysqlDataTruncation: Data truncation: Data too long for column 'pass' at row 1")){
+			out.print("Failed to create an account: Password is too long. Try again");
+		}
+		else if (String.valueOf(ex).equals("com.mysql.jdbc.MysqlDataTruncation: Data truncation: Data too long for column 'first_name' at row 1")){
+			out.print("Failed to create an account: First Name is too long. Try again");
+		}
+		else if (String.valueOf(ex).equals("com.mysql.jdbc.MysqlDataTruncation: Data truncation: Data too long for column 'last_name' at row 1")){
+			out.print("Failed to create an account: Last Name is too long. Try again");
+		}
+		//out.print(ex);
 	}
 %>
 </body>
