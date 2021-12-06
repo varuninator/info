@@ -23,41 +23,52 @@ try {
             String month = request.getParameter("SalesMonth");
             String year = request.getParameter("SalesYear");
             
-			String calc = "SELECT * FROM user";
+			String calc = "SELECT COUNT(*) AS numTickets FROM ticket";
 			
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(calc);
-			int usercounter = 0;
-            while(result.next()){
-            	if((result.getInt("type1") != 0) && (result.getInt("type1") != 1)){ 
-            		usercounter++;
-            	}
-            }
-            if(usercounter == 0){
-            	out.print("There are no customers within the system: Cannot derive a single customer who brought in the most revenue at this time");
-	            out.print("<br/>");
-            }
-            else if(usercounter >= 2){
-	            calc = "SELECT u.username, COUNT(*) FROM otrs.user u, otrs.ticket t WHERE u.username = t.username GROUP BY u.username " +
-	            "HAVING COUNT(*) = (SELECT MAX(t1.flightsBooked) AS ticketMaxCustomer FROM (SELECT count(*) AS flightsBooked FROM otrs.user u, otrs.ticket t " +
-				"WHERE u.username = t.username GROUP BY u.username) AS t1);";
-				
+			result.next();
+			int numTickets = result.getInt("numTickets");
+			
+			if(numTickets == 0) {
+				out.print("Cannot calculate the customer who brought in the most revenue because no tickets have been purchased yet.");
+				out.print("<br/>");
+			} else {
+				calc = "SELECT * FROM user";
 				result = stmt.executeQuery(calc);
-				result.next();
-				
-				out.print("The customer who brought the most revenue is (username): " + result.getString("username"));
-	            out.print("<br/>");
-            }else{
-            	calc = "SELECT * FROM user";
-            	result = stmt.executeQuery(calc);
-            	while(result.next()){
-                	if((result.getInt("type1") != 0) && (result.getInt("type1") != 1)){ 
-                		out.print("The customer who brought the most revenue is (username): " + result.getString("username"));
-                    	out.print("<br/>");
-                    	break;
-                	}
-                }
-            }
+	
+				int usercounter = 0;
+	            while(result.next()){
+	            	if((result.getInt("type1") != 0) && (result.getInt("type1") != 1)){ 
+	            		usercounter++;
+	            	}
+	            }
+	            if(usercounter == 0){
+	            	out.print("There are no customers within the system: Cannot derive a single customer who brought in the most revenue at this time");
+		            out.print("<br/>");
+	            }
+	            else if(usercounter >= 2){
+		            calc = "SELECT u.username, COUNT(*) FROM otrs.user u, otrs.ticket t WHERE u.username = t.username GROUP BY u.username " +
+		            "HAVING COUNT(*) = (SELECT MAX(t1.flightsBooked) AS ticketMaxCustomer FROM (SELECT count(*) AS flightsBooked FROM otrs.user u, otrs.ticket t " +
+					"WHERE u.username = t.username GROUP BY u.username) AS t1);";
+					
+					result = stmt.executeQuery(calc);
+					result.next();
+					
+					out.print("The customer who brought the most revenue is (username): " + result.getString("username"));
+		            out.print("<br/>");
+	            }else{
+	            	calc = "SELECT * FROM user";
+	            	result = stmt.executeQuery(calc);
+	            	while(result.next()){
+	                	if((result.getInt("type1") != 0) && (result.getInt("type1") != 1)){ 
+	                		out.print("The customer who brought the most revenue is (username): " + result.getString("username"));
+	                    	out.print("<br/>");
+	                    	break;
+	                	}
+	                }
+	            }
+			}
             %>
             <br>
             <form method="get" action="SalesReport.jsp">
@@ -102,7 +113,8 @@ try {
 
 
 } catch (Exception e) {
-    out.print(e);
+    out.print(e.getMessage());
+    //out.print(e);
 }
             %>
 </body>
