@@ -47,6 +47,9 @@ try {
 				if(session.getAttribute("user").equals(result.getString("username"))){
 					out.print("id number: "+ result.getInt("id_num") + ", flight number: " + result.getInt("flight_number") + ", username: " + result.getString("username") + ", seat number: "+ result.getInt("seat_number")+ ", first name: " + result.getString("first_name") + ", last name: " + result.getString("last_name")+ ", class: " + checkClass + "<br/>");
 					
+				}else{
+					out.print("No Reservations");
+					break;
 				}
 			}
 				
