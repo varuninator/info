@@ -51,35 +51,33 @@ try {
 		<% 
 		
 		
-		boolean invalid = false;
+		boolean invalid = true;
 		if(cancel!=null){
-		while(result.next()){
-			if(cancel.equals(result.getString("id_num"))){
-				delTix = "DELETE FROM otrs.ticket WHERE id_num = " + result.getInt("id_num");
-				PreparedStatement ps = con.prepareStatement(delTix);
-				ps.executeUpdate();
-				out.print("Deleted ticket with id number: " + result.getInt("id_num"));
-				 invalid=true;
-				break;
+			while(result.next()){
+				if(cancel.trim().equals(result.getString("id_num")) && session.getAttribute("user").equals(result.getString("username"))) {
+					if(result.getBoolean("business_class") || result.getBoolean("first_class")) {
+						delTix = "DELETE FROM otrs.ticket WHERE id_num = " + result.getInt("id_num");
+						PreparedStatement ps = con.prepareStatement(delTix);
+						ps.executeUpdate();
+						out.print("Deleted ticket with id number: " + result.getInt("id_num"));
+						invalid = false;
+					break;
+					}
+					else {
+						out.print("You can only cancel business or first class reservations.");
+// 						out.print("<br/>");
+					}
+				}
 			}
-				
-			
-			
+			if(invalid){
+				out.print("You have entered an invalid ticket id number.");
 			}
 		}
 		
-		if(invalid == false){
-			out.print("invalid");
-		}
-		
-		
-		
+
 			
-			
-				
-			
-						
-					
+
+
 					
 } catch (Exception e) {
 	out.print(e);
