@@ -52,6 +52,20 @@ try {
 					break;
 				}
 			}
+			
+			
+			%>
+			
+			
+			<form method="get" action="Cancel.jsp">
+				<input type="submit" value="Cancel Reservation" />
+			</form>
+			<form method="get" action="HomePage.jsp">
+				<input type="submit" value="Return to Home" />
+			</form>
+			
+		
+			<%
 				
 
 } catch (Exception e) {
