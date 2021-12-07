@@ -126,6 +126,7 @@ try {
 			 	</select> 
 			 	<input type="submit" value="Sort" />
 			</form>
+			<br>
 			<%
 			while(result.next()){
 				out.print("Flight number:" + result.getInt("flight_number") + ", Start: " + result.getString("departing_airport") + ", End: " + result.getString("arriving_airport") + ", Take-off Time: " + result.getTimestamp("departure_time") + ", Arrival Time: " + result.getTimestamp("arrival_time")+ ", Price: " + result.getInt("base_price"));
