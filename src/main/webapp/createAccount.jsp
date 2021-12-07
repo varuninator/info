@@ -60,7 +60,9 @@
 		else if (String.valueOf(ex).equals("com.mysql.jdbc.MysqlDataTruncation: Data truncation: Data too long for column 'last_name' at row 1")){
 			out.print("Failed to create an account: Last Name is too long. Try again");
 		}
-		//out.print(ex);
+		else{
+			out.print(ex);
+		}
 	}
 %>
 </body>

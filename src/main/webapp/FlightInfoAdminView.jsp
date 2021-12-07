@@ -35,19 +35,40 @@ try {
 				    </form>
 				    <br>
 				    <%
-				    
-				    //str = "SELECT SUM(30 * passengers) AS TRev FROM otrs.flight f WHERE f.flight_number = \"" + flightNum + "\"";
-				    str = "SELECT SUM(30 * id_num) AS TRev FROM otrs.ticket t WHERE  t.id_num = \"" + flightNum + "\"";
-			   
+
+				    str = "SELECT SUM(30) AS TRev FROM otrs.ticket t WHERE  t.flight_number = \"" + flightNum + "\"";
 				    result = stmt.executeQuery(str);
 	                result.next();
 				    out.print("FLIGHT: #" + flightNum + "<br/>");
-				    out.print("The total revenue from flight is: $" + result.getInt("TRev"));
-				    out.print("<br/><br/>ALL flight reservations for this flight:<br/>");
+				    out.print("The total revenue from this flight: $" + result.getInt("TRev"));
 				    
-				    /* str = "SELECT SUM(30 * passengers) AS TRev FROM otrs.flight f WHERE f.flight_number = \"" + flightNum + "\""; */
-				    
-				    break;
+				    str = "SELECT SUM(1) AS TRev FROM otrs.ticket t WHERE  t.flight_number = \"" + flightNum + "\"";
+				    result = stmt.executeQuery(str);
+				    result.next();
+				    out.print("<br/>The total tickets sold for this flight: " + result.getInt("TRev")+ "<br/>");
+				    %>
+				    <br>
+					<form method="get" action="HomePage.jsp">
+		  				<input type="submit" value="Back to Home Page" />
+					</form>
+					<%
+					
+				    out.print("<br/>ALL flight reservations for this flight:<br/><br/>");
+				    str = "SELECT * FROM ticket";
+				    result = stmt.executeQuery(str);
+				    while (result.next()){
+				    	if ((String.valueOf(result.getInt("flight_number")).equals(request.getParameter("SearchFlight")))){		
+				    		if(result.getString("first_class").equals("1")){
+				    			out.print("Ticket #: "+ result.getInt("id_num") +", Flight #: "+ result.getInt("flight_number") +", Username: "+ result.getString("username") + ", Seat #: " + result.getInt("seat_number") + ", First Name: "+ result.getString("first_name") + ", Last Name: " + result.getString("last_name") + ", Class: First Class<br/>");
+							}
+				    		else if(result.getString("business_class").equals("1")){
+				    			out.print("Ticket #: "+ result.getInt("id_num") +", Flight #: "+ result.getInt("flight_number") +", Username: "+ result.getString("username") + ", Seat #: " + result.getInt("seat_number") + ", First Name: "+ result.getString("first_name") + ", Last Name: " + result.getString("last_name") + ", Class: Business Class<br/>");
+							}
+				    		else if(result.getString("economy_class").equals("1")){
+				    			out.print("Ticket #: "+ result.getInt("id_num") +", Flight #: "+ result.getInt("flight_number") +", Username: "+ result.getString("username") + ", Seat #: " + result.getInt("seat_number") + ", First Name: "+ result.getString("first_name") + ", Last Name: " + result.getString("last_name") + ", Class: Economy Class<br/>");
+							}
+				    	}
+				    }
 				}
 			}
 			if(!flightExist){

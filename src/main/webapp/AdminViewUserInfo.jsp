@@ -45,12 +45,31 @@ try {
 					</form>	
 					<form method="get" action="DeleteUser.jsp"> 
 		  			<input type="submit" value="Delete User" />
-					</form>	
-					<br>	
+					</form>		
+				    <br>
+					<form method="get" action="HomePage.jsp">
+		  				<input type="submit" value="Back to Home Page" />
+					</form>
 					<%
-					for(int i = 0; i<5; i++){ 
-						out.print("reservation " + i+ "<br/>");
-					}
+					
+					out.print("<br/>ALL tickets bought by " + session.getAttribute("userADsearch") + ":<br/><br/>");
+					str = "SELECT * FROM ticket";
+				    result = stmt.executeQuery(str);
+				    while (result.next()){
+				    	if ((result.getString("username").equals(session.getAttribute("userADsearch")))&&(result.getString("user_delete").equals("0"))){	
+				    		if(result.getString("first_class").equals("1")){
+				    			out.print("Ticket #: "+ result.getInt("id_num") +", Flight #: "+ result.getInt("flight_number") +", Username: "+ result.getString("username") + ", Seat #: " + result.getInt("seat_number") + ", First Name: "+ result.getString("first_name") + ", Last Name: " + result.getString("last_name") + ", Class: First Class<br/>");
+							}
+				    		else if(result.getString("business_class").equals("1")){
+				    			out.print("Ticket #: "+ result.getInt("id_num") +", Flight #: "+ result.getInt("flight_number") +", Username: "+ result.getString("username") + ", Seat #: " + result.getInt("seat_number") + ", First Name: "+ result.getString("first_name") + ", Last Name: " + result.getString("last_name") + ", Class: Business Class<br/>");
+							}
+				    		else if(result.getString("economy_class").equals("1")){
+				    			out.print("Ticket #: "+ result.getInt("id_num") +", Flight #: "+ result.getInt("flight_number") +", Username: "+ result.getString("username") + ", Seat #: " + result.getInt("seat_number") + ", First Name: "+ result.getString("first_name") + ", Last Name: " + result.getString("last_name") + ", Class: Economy Class<br/>");
+							}
+				    	}
+				    }
+					
+					
 				}
 					
 			}

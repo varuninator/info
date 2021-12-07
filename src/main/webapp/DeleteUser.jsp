@@ -17,16 +17,27 @@ try {
 			Connection con = db.getConnection();
 			
 			//Create a SQL statement
-			Statement stmt = con.createStatement();		
-			String str = "SELECT * FROM user";
+			Statement stmt = con.createStatement();	
 			
-			//Run the query against the database.
+			String str = "SELECT * FROM ticket";
 			ResultSet result = stmt.executeQuery(str);
-			out.print(session.getAttribute("userADsearch") + "'s account has been deleted!");
+			String userdeletedTic = "UPDATE otrs.ticket SET user_delete = true WHERE (username = \"" + session.getAttribute("userADsearch") + "\" AND id_num <> 0)";
+			//out.print("<br/>"+ userdeletedTic +"<br/>");
+			PreparedStatement ps = con.prepareStatement(userdeletedTic);
+			ps.executeUpdate();
+			while(result.next()){
+				if((result.getString("username").equals(session.getAttribute("userADsearch")))){
+					
+				}
+			}
+			
+			str = "SELECT * FROM user";
+			result = stmt.executeQuery(str);
+			out.print("Account: " + session.getAttribute("userADsearch") + " has been deleted!");
 			String deleteU = "DELETE FROM user WHERE username = \"" + session.getAttribute("userADsearch") + "\"";
 			/* out.print(deleteU); */
-			PreparedStatement ps = con.prepareStatement(deleteU);
-			ps.executeUpdate();
+			PreparedStatement ps2 = con.prepareStatement(deleteU);
+			ps2.executeUpdate();
 			
 			%>
 		 	<form method="get" action="HomePage.jsp"> 
