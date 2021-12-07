@@ -77,7 +77,7 @@ try {
 					result = stmt.executeQuery(str);
 					result.next();
 					if(result.getString("username") != null){
-						tix = "INSERT otrs.ticket (username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + "\"" + session.getAttribute("rep_user") + "\""+", " + (max_seat + 1) + ", \"" + result.getString("first_name") + "\""+", " +  "\"" + result.getString("last_name") + "\"" + ", true " + ", false" + ", false" + ")";	
+						tix = "INSERT otrs.ticket (user_delete, flight_number, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\"" + ", \"" + session.getAttribute("rep_user") + "\""+", " + (max_seat + 1) + ", \"" + result.getString("first_name") + "\""+", " +  "\"" + result.getString("last_name") + "\"" + ", true " + ", false" + ", false" + ")";	
 						//out.print(tix);
 						  ps = con.prepareStatement(tix);
 						 ps.executeUpdate();
