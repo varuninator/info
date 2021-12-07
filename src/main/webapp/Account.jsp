@@ -33,7 +33,8 @@ try {
 			}
 			String str = "SELECT * FROM waitlist";
 			ResultSet result = stmt.executeQuery(str);
-				
+			int seats = 0;
+			int passenger = 0;
 			
 						%>
 						
@@ -55,14 +56,22 @@ try {
 						
 					
 						<%
+						
 						boolean wl = true;
 						   /*String insert = "INSERT INTO waitlist(flight_number, username, spot) value ("
 								+ Collections.list(request.getParameterNames()).get(0) + ", \"" + session.getAttribute("user") + "\", " + 1 + ")";*/
+						boolean checkUser = false;		
+					
 								while(result.next()){
+									//out.print(result.getInt("passengers"));
+									//out.print(result.getInt("number_of_seats"));
 								if(session.getAttribute("user").equals(result.getString("username"))&&Collections.list(request.getParameterNames()).get(0).equals(result.getString("flight_number"))){
 										out.print("You have already been put in waitlist. Please try another flight. ");
-										
+												
 												wl = false;
+												checkUser = true;
+												//out.print(passenger);
+												//out.print(seats);
 												break;
 								}
 									
@@ -70,9 +79,36 @@ try {
 								}
 								
 								
-								//out.print(wl);
 								
-								if(wl == true){
+								str ="SELECT * FROM flys INNER JOIN aircraft ON aircraft.aircraft_id = flys.aircraft_id INNER JOIN flight ON flight.flight_number = flys.flight_number";
+								result = stmt.executeQuery(str);
+								
+								if(checkUser==false){	//necessary to check if booking still available			
+									while(result.next()){
+										
+										if(result.getInt("passengers")<result.getInt("number_of_seats")&&Collections.list(request.getParameterNames()).get(0).equals(result.getString("flight_number"))){
+												//out.print("GREATER");
+														
+														
+														seats = result.getInt("number_of_seats");
+														passenger = result.getInt("passengers");
+														//out.print(passenger);
+														//out.print(seats);
+														break;
+										}
+											
+										
+										}
+								}
+								
+								
+								
+								//out.print(wl);
+								//out.print(passenger);
+								//out.print(seats);
+								//out.print(wl);
+								if(wl == true&&passenger>=seats){
+									
 									str = "Select Max(spot) as spot from waitlist where flight_number = " + Collections.list(request.getParameterNames()).get(0);
 									
 									result = stmt.executeQuery(str);
@@ -87,6 +123,11 @@ try {
 										//Run the query against the DB
 										ps.executeUpdate();
 										out.print("You have been added to the waitlist");
+										//out.print(passenger);
+										//out.print(seats);
+								}else if(passenger<seats){
+									out.print("Waitlist error. There are available seats on the flight");
+									
 								}
 								
 												
