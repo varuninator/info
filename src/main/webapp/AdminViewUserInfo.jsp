@@ -57,7 +57,7 @@ try {
 				    str = "SELECT SUM(1) AS URev FROM otrs.ticket t WHERE  t.username = \"" + session.getAttribute("userADsearch") + "\"";
 				    result = stmt.executeQuery(str);
 				    result.next();
-				    out.print("<br/>The total tickets sold for this flight: " + result.getInt("URev")+ "<br/>");
+				    out.print("<br/>The total tickets sold for this user: " + result.getInt("URev")+ "<br/>");
 					
 					%>
 				    <br>
