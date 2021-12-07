@@ -45,7 +45,21 @@ try {
 					</form>	
 					<form method="get" action="DeleteUser.jsp"> 
 		  			<input type="submit" value="Delete User" />
-					</form>		
+					</form>	
+					<br>	
+					<% 
+					
+					str = "SELECT SUM(30) AS URev FROM otrs.ticket t WHERE  t.username = \"" + session.getAttribute("userADsearch") + "\"";
+				    result = stmt.executeQuery(str);
+	                result.next();
+				    out.print("The total revenue from this user: $" + result.getInt("URev"));
+				    
+				    str = "SELECT SUM(1) AS URev FROM otrs.ticket t WHERE  t.username = \"" + session.getAttribute("userADsearch") + "\"";
+				    result = stmt.executeQuery(str);
+				    result.next();
+				    out.print("<br/>The total tickets sold for this flight: " + result.getInt("URev")+ "<br/>");
+					
+					%>
 				    <br>
 					<form method="get" action="HomePage.jsp">
 		  				<input type="submit" value="Back to Home Page" />
