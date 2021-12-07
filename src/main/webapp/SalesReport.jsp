@@ -53,10 +53,15 @@ try {
 					"WHERE u.username = t.username GROUP BY u.username) AS t1);";
 					
 					result = stmt.executeQuery(calc);
-					result.next();
 					
-					out.print("The customer who brought the most revenue is (username): " + result.getString("username"));
-		            out.print("<br/>");
+					while(result.next()) {
+						out.print("The customer who brought the most revenue is (username): " + result.getString("username"));
+						out.print("<br/>");
+					}
+// 					result.next();
+					
+// 					out.print("The customer who brought the most revenue is (username): " + result.getString("username"));
+// 		            out.print("<br/>");
 	            }else{
 	            	calc = "SELECT * FROM user";
 	            	result = stmt.executeQuery(calc);
