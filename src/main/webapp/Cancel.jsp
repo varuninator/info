@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Cancel Tickets</title>
 </head>
 <body>
 <%
@@ -35,7 +35,7 @@ try {
 			%>
 			<br>
 			<form method="get" action="Cancel.jsp">
-				<label>Enter a id number of ticket to cancel: <input name = "fCancel"/></label>
+				<label>Please enter the ticket number you wish to cancel: <input name = "fCancel"/></label>
 			  <input type="submit" value="Cancel Reservation" />
 			</form>
 			<br>
@@ -64,13 +64,13 @@ try {
 					break;
 					}
 					else {
-						out.print("You can only cancel business or first class reservations.");
+						out.print("You can only cancel business or first class reservations. Please contact our Customer Representatives for further assistance.<br/>");
 // 						out.print("<br/>");
 					}
 				}
 			}
 			if(invalid){
-				out.print("You have entered an invalid ticket id number.");
+				out.print("You have entered an invalid ticket number.");
 			}
 		}
 		

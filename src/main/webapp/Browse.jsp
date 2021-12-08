@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Browse Flights</title>
 </head>
 <body>
 <%
@@ -151,7 +151,7 @@ try {
 				<input type = "hidden" name = <%=flight_num %>>
   				<input type="submit" value="Join Waitlist" onclick = <%="func" + count %>()/>
 				</form>
-
+				<br>
 				<script language = "JavaScript">
 					function <%="func" + count %>(){
 						document.<%="form" + count %>.<%=flight_num%>.value = "yes";

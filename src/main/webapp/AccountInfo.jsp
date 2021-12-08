@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Account Info</title>
 </head>
 <body>
 <%
@@ -28,10 +28,17 @@ try {
 			//Run the query against the database.
 			//ResultSet result = stmt.executeQuery(str);
 			
-			
-			
-			String str = "SELECT * FROM ticket";
+			String str = "SELECT * FROM user";
 			ResultSet result = stmt.executeQuery(str);
+			
+			while(result.next()){
+				if(result.getString("username").equals(session.getAttribute("user"))){
+					out.print("First Name: " + result.getString("first_name") + "<br/>Last Name: " + result.getString("last_name") + "<br/>Username: " + result.getString("username") + "<br/><br/>");
+				}
+			}
+			
+			str = "SELECT * FROM ticket";
+			result = stmt.executeQuery(str);
 			out.print("Reservation Info: <br/>");
 			
 			boolean hasReservations = false;
@@ -46,7 +53,7 @@ try {
 					checkClass = "economy class";
 				}
 				if(session.getAttribute("user").equals(result.getString("username"))){
-					out.print("id number: "+ result.getInt("id_num") + ", flight number: " + result.getInt("flight_number") + ", username: " + result.getString("username") + ", seat number: "+ result.getInt("seat_number")+ ", first name: " + result.getString("first_name") + ", last name: " + result.getString("last_name")+ ", class: " + checkClass + "<br/>");
+					out.print("Ticket Number: "+ result.getInt("id_num") + ", flight number: " + result.getInt("flight_number") + ", username: " + result.getString("username") + ", seat number: "+ result.getInt("seat_number")+ ", first name: " + result.getString("first_name") + ", last name: " + result.getString("last_name")+ ", class: " + checkClass + "<br/>");
 					hasReservations = true;
 					out.print("<br/>");
 				}
@@ -60,7 +67,7 @@ try {
 			%>
 			<br>
 			<form method="get" action="Cancel.jsp">
-				<input type="submit" value="Cancel Reservation" />
+				<input type="submit" value="Cancel A Reservation" />
 			</form>
 			<form method="get" action="HomePage.jsp">
 				<input type="submit" value="Return to Home Page" />
