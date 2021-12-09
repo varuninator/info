@@ -77,7 +77,7 @@ try {
 					orderby = "arrival_time-departure_time";
 				}
 			}
-			if(request.getParameter("flexibility") == null){
+			if(request.getParameter("flexibility").equals("0")){
 					if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
 						str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 					}else if (session.getAttribute("Start") != ""){
