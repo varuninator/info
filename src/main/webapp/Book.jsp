@@ -72,7 +72,7 @@ try {
 				result.next();
 				
 				int max_seat = result.getInt("seat_number");
-				out.print(max_seat);
+				//out.print(max_seat);
 				str = "SELECT * FROM otrs.ticket WHERE flight_number = " + Collections.list(request.getParameterNames()).get(0) + " ORDER BY LENGTH(seat_number), seat_number ASC";
 				result = stmt.executeQuery(str);
 				int i=0;
@@ -81,12 +81,12 @@ try {
 					 
 						 if(arr[i]!=result.getInt("seat_number")){//if 
 							 max_seat = arr[i]-1;
-						 		out.print("idNUM: "+ result.getInt("id_num") + " seatNUM: " +   result.getInt("seat_number") + " ARR: " + arr[i] + " " );
+						 		//out.print("idNUM: "+ result.getInt("id_num") + " seatNUM: " +   result.getInt("seat_number") + " ARR: " + arr[i] + " " );
 						 		break;
 						 }
 					i++;
 				 }
-				 out.print(max_seat);
+				 //out.print(max_seat);
 				 //out.print(max_seat);
 				/*str = "SELECT * FROM otrs.ticket";
 				result = stmt.executeQuery(str);
