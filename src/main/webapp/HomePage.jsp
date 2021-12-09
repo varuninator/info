@@ -119,7 +119,7 @@ try {
 							<label>Date for one way trip (yyyy-mm-dd): <input name = "search"/></label>
 							<label>Starting Airport(XXX): <input name = "airStart"/></label>
 							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
-							 <select name="flexibility by: " size=1>
+							 <select name="flexibility" size=1>
 							<option value="0">No Flexibility</option>
 							<option value="1">One Day Flexibility</option>
 							<option value="2">Two Day Flexibility</option>
@@ -133,7 +133,7 @@ try {
 							<label>Date for round end trip (yyyy-mm-dd): <input name = "search2"/></label>
 							<label>Starting Airport(XXX): <input name = "airStart"/></label>
 							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
-							<select name="flexibility by: " size=1>
+							<select name="flexibility" size=1>
 							<option value="0">No Flexibility</option>
 							<option value="1">One Day Flexibility</option>
 							<option value="2">Two Day Flexibility</option>
@@ -177,7 +177,7 @@ try {
 							<label>Date for one way trip (yyyy-mm-dd): <input name = "search"/></label>
 							<label>Starting Airport(XXX): <input name = "airStart"/></label>
 							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
-							 <select name="flexibility by: " size=1>
+							 <select name="flexibility" size=1>
 							<option value="0">No Flexibility</option>
 							<option value="1">One Day Flexibility</option>
 							<option value="2">Two Day Flexibility</option>
@@ -194,7 +194,7 @@ try {
 							<label>Date for round end trip (yyyy-mm-dd): <input name = "search2"/></label>
 							<label>Starting Airport(XXX): <input name = "airStart"/></label>
 							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
-							<select name="flexibility by: " size=1>
+							<select name="flexibility" size=1>
 							<option value="0">No Flexibility</option>
 							<option value="1">One Day Flexibility</option>
 							<option value="2">Two Day Flexibility</option>

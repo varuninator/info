@@ -77,33 +77,204 @@ try {
 					orderby = "arrival_time-departure_time";
 				}
 			}
-			
-			if(session.getAttribute("search2") == null){
-				if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
-					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
-				}else if (session.getAttribute("Start") != ""){
-					out.print(session.getAttribute("Start"));
-					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
-				}else if (session.getAttribute("End") != ""){
-					str = "SELECT * FROM otrs.flight where arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
-				}else{
-					str = "SELECT * FROM otrs.flight where date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
-				}
-				//Run the query against the database.
-			// Round trip search
-			}else{
-				if(session.getAttribute("Start") != null && session.getAttribute("End") != null){
-					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
-				}else if (session.getAttribute("Start") != null){
-					out.print(session.getAttribute("Start"));
-					str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
-				}else if (session.getAttribute("End") != null){
-					str = "SELECT * FROM otrs.flight where arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search")  + "\"" + filter + " order by " + orderby;
-				}else{
-					str = "SELECT * FROM otrs.flight where date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
-				}
+			if(request.getParameter("flexibility") == null){
+					if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
+						str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
+					}else if (session.getAttribute("Start") != ""){
+						out.print(session.getAttribute("Start"));
+						str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
+					}else if (session.getAttribute("End") != ""){
+						str = "SELECT * FROM otrs.flight where arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
+					}else{
+						str = "SELECT * FROM otrs.flight where date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
+					}
 			}
-
+			else if(request.getParameter("flexibility").equals("1")){
+					if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
+						str = "SELECT * FROM otrs.flight where departing_airport =\"" 
+							+ session.getAttribute("Start") + 
+							"\" and arriving_airport = \"" 
+							+ session.getAttribute("End") + 
+							"\" and (date(departure_time) = \"" 
+							+ session.getAttribute("search") + 
+							"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
+							+ session.getAttribute("search") + 
+							"\" or date(DATE_ADD(departure_time, interval -1 day)) = \"" 
+							+ session.getAttribute("search") + "\")"
+							+ filter + " order by " + orderby;
+						out.print(str);
+					}else if (session.getAttribute("Start") != ""){
+						str = "SELECT * FROM otrs.flight where departing_airport =\""
+							+ session.getAttribute("Start") + 
+							"\" and (date(departure_time) = \"" 
+							+ session.getAttribute("search") + 
+							"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
+							+ session.getAttribute("search") + 
+							"\" or date(DATE_ADD(departure_time, interval -1 day)) = \"" 
+							+ session.getAttribute("search") + "\")"
+							+ filter + " order by " + orderby;
+					}else if (session.getAttribute("End") != ""){
+						str = "SELECT * FROM otrs.flight where arriving_airport = \"" 
+							+ session.getAttribute("End") + 
+							"\" and (date(departure_time) = \"" 
+							+ session.getAttribute("search") + 
+							"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
+							+ session.getAttribute("search") + 
+							"\" or date(DATE_ADD(departure_time, interval -1 day)) = \"" 
+							+ session.getAttribute("search") + "\")"
+							+ filter + " order by " + orderby;
+					}else{	
+						str = "SELECT * FROM otrs.flight where (date(departure_time) = \""
+							+ session.getAttribute("search") + 
+							"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
+							+ session.getAttribute("search") + 
+							"\"or date(DATE_ADD(departure_time, interval -1 day)) = \"" 
+							+ session.getAttribute("search") + "\")" 
+							+ filter + " order by " + orderby;
+						
+						out.print(str);
+					}
+			}
+			else if(request.getParameter("flexibility").equals("2")){
+				if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
+					str = "SELECT * FROM otrs.flight where departing_airport =\"" 
+						+ session.getAttribute("Start") + 
+						"\" and arriving_airport = \"" 
+						+ session.getAttribute("End") + 
+						"\" and (date(departure_time) = \"" 
+						+ session.getAttribute("search") +
+						"\" or date(DATE_ADD(departure_time, interval 2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -1 day)) = \"" 
+						+ session.getAttribute("search") + "\")"
+						+ filter + " order by " + orderby;
+					out.print(str);
+				}else if (session.getAttribute("Start") != ""){
+					str = "SELECT * FROM otrs.flight where departing_airport =\""
+						+ session.getAttribute("Start") + 
+						"\" and (date(departure_time) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -1 day)) = \"" 
+						+ session.getAttribute("search") + "\")"
+						+ filter + " order by " + orderby;
+				}else if (session.getAttribute("End") != ""){
+					str = "SELECT * FROM otrs.flight where arriving_airport = \"" 
+						+ session.getAttribute("End") + 
+						"\" and (date(departure_time) = \"" 
+						+ session.getAttribute("search") +
+						"\" or date(DATE_ADD(departure_time, interval 2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -1 day)) = \"" 
+						+ session.getAttribute("search") + "\")"
+						+ filter + " order by " + orderby;
+				}else{	
+					str = "SELECT * FROM otrs.flight where (date(departure_time) = \""
+						+ session.getAttribute("search") +
+						"\" or date(DATE_ADD(departure_time, interval 2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\"or date(DATE_ADD(departure_time, interval -1 day)) = \"" 
+						+ session.getAttribute("search") + "\")" 
+						+ filter + " order by " + orderby;
+					
+					out.print(str);
+				}
+		}
+		else if(request.getParameter("flexibility").equals("3")){
+				if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
+					str = "SELECT * FROM otrs.flight where departing_airport =\"" 
+						+ session.getAttribute("Start") + 
+						"\" and arriving_airport = \"" 
+						+ session.getAttribute("End") + 
+						"\" and (date(departure_time) = \"" 
+						+ session.getAttribute("search") +
+						"\" or date(DATE_ADD(departure_time, interval 3 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -3 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -1 day)) = \"" 
+						+ session.getAttribute("search") + "\")"
+						+ filter + " order by " + orderby;
+					out.print(str);
+				}else if (session.getAttribute("Start") != ""){
+					str = "SELECT * FROM otrs.flight where departing_airport =\""
+						+ session.getAttribute("Start") + 
+						"\" and (date(departure_time) = \"" 
+						+ session.getAttribute("search") +
+						"\" or date(DATE_ADD(departure_time, interval 3 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -3 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -1 day)) = \"" 
+						+ session.getAttribute("search") + "\")"
+						+ filter + " order by " + orderby;
+				}else if (session.getAttribute("End") != ""){
+					str = "SELECT * FROM otrs.flight where arriving_airport = \"" 
+						+ session.getAttribute("End") + 
+						"\" and (date(departure_time) = \"" 
+						+ session.getAttribute("search") +
+						"\" or date(DATE_ADD(departure_time, interval 3 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -3 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -1 day)) = \"" 
+						+ session.getAttribute("search") + "\")"
+						+ filter + " order by " + orderby;
+				}else{	
+					str = "SELECT * FROM otrs.flight where (date(departure_time) = \""
+						+ session.getAttribute("search") +
+						"\" or date(DATE_ADD(departure_time, interval 3 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -3 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval -2 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
+						+ session.getAttribute("search") + 
+						"\"or date(DATE_ADD(departure_time, interval -1 day)) = \"" 
+						+ session.getAttribute("search") + "\")" 
+						+ filter + " order by " + orderby;
+					
+					out.print(str);
+				}
+		}
 			ResultSet result = stmt.executeQuery(str);
 			int count = 0;
 			
