@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
@@ -36,7 +36,11 @@ try {
 			//ResultSet result1 = stmt.executeQuery(str1);
 			//int count = 1;
 			
+			int[] arr = new int[500];
 			
+			for(int i=0; i<arr.length; i++){
+				arr[i] = i+1;
+			}
 			
 			
 			 while (result.next()) {
@@ -62,12 +66,28 @@ try {
 				
 				ps.executeUpdate();
 				
-				str = "Select Max(seat_number) as seat_number  FROM for_ INNER JOIN flight ON for_.flight_number = " + Collections.list(request.getParameterNames()).get(0) + " INNER JOIN ticket ON for_.id_num = ticket.id_num";
+				str = "Select Max(CAST(seat_number as SIGNED)) as seat_number  FROM for_ INNER JOIN flight ON for_.flight_number = " + Collections.list(request.getParameterNames()).get(0) + " INNER JOIN ticket ON for_.id_num = ticket.id_num";
 				
 				result = stmt.executeQuery(str);
 				result.next();
 				
 				int max_seat = result.getInt("seat_number");
+				out.print(max_seat);
+				str = "SELECT * FROM otrs.ticket WHERE flight_number = " + Collections.list(request.getParameterNames()).get(0) + " ORDER BY LENGTH(seat_number), seat_number ASC";
+				result = stmt.executeQuery(str);
+				int i=0;
+				
+				 while (result.next()) {
+					 
+						 if(arr[i]!=result.getInt("seat_number")){//if 
+							 max_seat = arr[i]-1;
+						 		out.print("idNUM: "+ result.getInt("id_num") + " seatNUM: " +   result.getInt("seat_number") + " ARR: " + arr[i] + " " );
+						 		break;
+						 }
+					i++;
+				 }
+				 out.print(max_seat);
+				 //out.print(max_seat);
 				/*str = "SELECT * FROM otrs.ticket";
 				result = stmt.executeQuery(str);
 				result.next();*/
@@ -88,7 +108,7 @@ try {
 						 ps.executeUpdate();
 					}
 				}else{
-					tix = "INSERT otrs.ticket (user_delete, flight_number, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\"" + ", \"" + session.getAttribute("user") + "\""+", " + (result.getInt("seat_number") + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", true " + ", false" + ", false" + ")";	
+					tix = "INSERT otrs.ticket (user_delete, flight_number, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\"" + ", \"" + session.getAttribute("user") + "\""+", " + (max_seat + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", true " + ", false" + ", false" + ")";	
 					//out.print(tix);
 					  ps = con.prepareStatement(tix);
 					 ps.executeUpdate();

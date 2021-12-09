@@ -109,7 +109,7 @@ try {
 								//out.print(wl);
 								if(wl == true&&passenger>=seats){
 									
-									str = "Select Max(spot) as spot from waitlist where flight_number = " + Collections.list(request.getParameterNames()).get(0);
+									str = "Select Max(CAST(spot as SIGNED)) as spot from waitlist where flight_number = " + Collections.list(request.getParameterNames()).get(0);
 									
 									result = stmt.executeQuery(str);
 									result.next();
