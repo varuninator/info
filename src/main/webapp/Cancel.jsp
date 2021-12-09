@@ -50,17 +50,42 @@ try {
 			<br>
 		<% 
 		
-		
+		String decPass = "";
+		int count = 0;
+		int flightNum = 0;
 		boolean invalid = true;
 		if(cancel!=null){
 			while(result.next()){
 				if(cancel.trim().equals(result.getString("id_num")) && session.getAttribute("user").equals(result.getString("username"))) {
 					if(result.getBoolean("business_class") || result.getBoolean("first_class")) {
+						
 						delTix = "DELETE FROM otrs.ticket WHERE id_num = " + result.getInt("id_num");
 						PreparedStatement ps = con.prepareStatement(delTix);
 						ps.executeUpdate();
 						out.print("Deleted ticket with id number: " + result.getInt("id_num"));
 						invalid = false;
+						flightNum = result.getInt("flight_number");
+						
+						/* str = "SELECT * FROM flys INNER JOIN aircraft ON aircraft.aircraft_id = flys.aircraft_id INNER JOIN flight ON flight.flight_number = flys.flight_number WHERE flight.flight_number = " + flightNum;
+						result = stmt.executeQuery(str);
+						result.next();
+					if(result.getInt("passengers")==result.getInt("number_of_seats")){
+							out.print("FLIGHT: " + result.getInt("flight_number") + " IS OPEN");
+						}*/
+						
+							//session.setAttribute("f_num", flightNum);
+							
+							
+						
+							
+						//session.setAttribute("flight_number");
+						 str = "SELECT * FROM otrs.flight";
+						result = stmt.executeQuery(str);
+						result.next();
+						decPass = "UPDATE otrs.flight SET passengers = passengers - 1 WHERE flight_number = " + flightNum;
+						ps = con.prepareStatement(decPass);
+						ps.executeUpdate();
+						
 					break;
 					}
 					else {
