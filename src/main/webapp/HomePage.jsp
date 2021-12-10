@@ -53,6 +53,8 @@ try {
 						session.setAttribute("last", result.getString("last_name"));
 					}
 									
+					session.setAttribute("type", result.getInt("type1"));
+					
 					if(result.getInt("type1")==(0)){
 						out.print("Welcome back " + result.getString("first_name") + " " + result.getString("last_name") + "!<br/>");
 						out.print("Clearence: Admin<br/>Username: " + result.getString("username"));

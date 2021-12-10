@@ -111,7 +111,6 @@ try {
 					result = stmt.executeQuery(str);
 					
 					out.print("Waiting List: </br>");
-					out.print(str + "</br>");
 					while(result.next()){
 						out.print(result.getString("username") +", " + result.getInt("spot") + "</br>");
 					}
