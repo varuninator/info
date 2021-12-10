@@ -29,7 +29,7 @@ try {
 				if((String.valueOf(result.getString("airline_id")).equals(request.getParameter("SearchAirline")))){
 					AirlineExist = true;
 					%>
-				 	<form method="get" action="FlightInfoAdminView.jsp">
+				 	<form method="get" action="AirlineInfoAdmin.jsp">
 					<label>Search another Airline: <input name = "SearchAirline"/></label>
 	 				 <input type="submit" value="Search Airline" />
 				    </form>
@@ -38,25 +38,14 @@ try {
 				    out.print("Airline: " + request.getParameter("SearchAirline") + "<br/><br/>Revenue gained from this Airline: ");
 				    
 				    
-				    str = "";
-				    out.print(str);
-				    result = stmt.executeQuery(str);
-				    
-				    
-				    
-				    
-					/*
-				    str = "SELECT SUM(30) AS TRev FROM otrs.ticket t WHERE  t.flight_number = \"" + flightNum + "\"";
-				    result = stmt.executeQuery(str);
-	                result.next();
-				    out.print("FLIGHT: #" + flightNum + "<br/>");
-				    out.print("The total revenue from this flight: $" + result.getInt("TRev"));
-				    
-				    str = "SELECT SUM(1) AS TRev FROM otrs.ticket t WHERE  t.flight_number = \"" + flightNum + "\"";
+				    str = "select count(id_num) AS countRev from airline_company join flys using (airline_id) join ticket using (flight_number) where airline_id = " + "\"" + request.getParameter("SearchAirline") + "\"";
+				   
+				    //out.print(str);
 				    result = stmt.executeQuery(str);
 				    result.next();
-				    out.print("<br/>The total tickets sold for this flight: " + result.getInt("TRev")+ "<br/>");
-				    */
+				    
+				    out.print(result.getInt("countRev")*30);
+				    
 				    out.print("<br/>");
 				    %>
 				    <br>
