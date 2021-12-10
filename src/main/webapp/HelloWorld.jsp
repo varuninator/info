@@ -12,6 +12,7 @@
 
 	<body>
 	<%
+	session.invalidate();
 	out.print("Welcome to Breakaway Booking Agency!<br/><br/>Login Below:<bre/>");
 	%>
 		<br>

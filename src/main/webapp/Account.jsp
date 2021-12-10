@@ -67,7 +67,7 @@ try {
 							while(result.next()){
 									//out.print(result.getInt("passengers"));
 									//out.print(result.getInt("number_of_seats"));
-								if(session.getAttribute("user").equals(result.getString("username")) && Collections.list(request.getParameterNames()).get(0).equals(result.getString("flight_number")) && String.valueOf(result.getTimestamp("departure_time")).equals(depTime)){
+								if(session.getAttribute("type").equals("1") && session.getAttribute("user").equals(result.getString("username")) && Collections.list(request.getParameterNames()).get(0).equals(result.getString("flight_number")) && String.valueOf(result.getTimestamp("departure_time")).equals(depTime)){
 										out.print("You have already been put in waitlist. Please try another flight. ");
 												
 												wl = false;
@@ -115,10 +115,16 @@ try {
 									
 									result = stmt.executeQuery(str);
 									result.next();
+									String insert = "";
 									
-									String insert = "INSERT INTO waitlist(flight_number, departure_time, username, spot) value ("
-											+ Collections.list(request.getParameterNames()).get(0) + ", \'" + depTime + "\', \"" + session.getAttribute("user") + "\""+", " + (result.getInt("spot") + 1) +")"; //[increaments spot to check waitlist you can just say if the spot is less than any other spots that correspond to the flight number he is next in line]
-									 PreparedStatement ps = con.prepareStatement(insert);
+									if(String.valueOf(session.getAttribute("type")).equals("1")){
+										insert = "INSERT INTO waitlist(flight_number, departure_time, username, spot) value ("
+												+ Collections.list(request.getParameterNames()).get(0) + ", \'" + depTime + "\', \"" + session.getAttribute("rep_user") + "\""+", " + (result.getInt("spot") + 1) +")"; //[increaments spot to check waitlist you can just say if the spot is less than any other spots that correspond to the flight number he is next in line]
+									}else{
+										insert = "INSERT INTO waitlist(flight_number, departure_time, username, spot) value ("
+												+ Collections.list(request.getParameterNames()).get(0) + ", \'" + depTime + "\', \"" + session.getAttribute("user") + "\""+", " + (result.getInt("spot") + 1) +")"; //[increaments spot to check waitlist you can just say if the spot is less than any other spots that correspond to the flight number he is next in line]
+									}
+									PreparedStatement ps = con.prepareStatement(insert);
 
 										//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
 										
