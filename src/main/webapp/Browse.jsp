@@ -89,7 +89,7 @@ try {
 
 			}
 			
-			out.print("Date: " + session.getAttribute("search"));
+			
 
 			//out.print(request.getParameter("button0"));
 			//out.print("test");
@@ -99,23 +99,24 @@ try {
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 			//ONE way Search
 			
-
-			if((request.getParameter("flexibility") == null && session.getAttribute("round_trip") == "true") || (request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("0"))){
+			if((request.getParameter("flexibility") == null && session.getAttribute("round_trip") != "true") || (request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("0"))){
+				out.print("Date: " + session.getAttribute("search"));
 				session.setAttribute("felx", "0");
 					if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
-						str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
+						str = "SELECT * FROM otrs.flight join flys using( flight_number )  where departing_airport =\"" + session.getAttribute("Start") + "\" and arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 					}else if (session.getAttribute("Start") != ""){
-						str = "SELECT * FROM otrs.flight where departing_airport =\"" + session.getAttribute("Start") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
+						str = "SELECT * FROM otrs.flight join flys using( flight_number )  where departing_airport =\"" + session.getAttribute("Start") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 					}else if (session.getAttribute("End") != ""){
-						str = "SELECT * FROM otrs.flight where arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
+						str = "SELECT * FROM otrs.flight join flys using( flight_number )  where arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 					}else{
-						str = "SELECT * FROM otrs.flight where date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
+						str = "SELECT * FROM otrs.flight join flys using( flight_number )  where date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 					}
 			}
 			else if((request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("1")) || session.getAttribute("felx") == "1"){
+				out.print("Date: " + session.getAttribute("search"));
 				session.setAttribute("felx", "1");
 					if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
-						str = "SELECT * FROM otrs.flight where departing_airport =\"" 
+						str = "SELECT * FROM otrs.flight join flys using( flight_number )  where departing_airport =\"" 
 							+ session.getAttribute("Start") + 
 							"\" and arriving_airport = \"" 
 							+ session.getAttribute("End") + 
@@ -127,7 +128,7 @@ try {
 							+ session.getAttribute("search") + "\")"
 							+ filter + " order by " + orderby;
 					}else if (session.getAttribute("Start") != ""){
-						str = "SELECT * FROM otrs.flight where departing_airport =\""
+						str = "SELECT * FROM otrs.flight join flys using( flight_number )  where departing_airport =\""
 							+ session.getAttribute("Start") + 
 							"\" and (date(departure_time) = \"" 
 							+ session.getAttribute("search") + 
@@ -137,7 +138,7 @@ try {
 							+ session.getAttribute("search") + "\")"
 							+ filter + " order by " + orderby;
 					}else if (session.getAttribute("End") != ""){
-						str = "SELECT * FROM otrs.flight where arriving_airport = \"" 
+						str = "SELECT * FROM otrs.flight join flys using( flight_number )  where arriving_airport = \"" 
 							+ session.getAttribute("End") + 
 							"\" and (date(departure_time) = \"" 
 							+ session.getAttribute("search") + 
@@ -147,7 +148,7 @@ try {
 							+ session.getAttribute("search") + "\")"
 							+ filter + " order by " + orderby;
 					}else{	
-						str = "SELECT * FROM otrs.flight where (date(departure_time) = \""
+						str = "SELECT * FROM otrs.flight join flys using( flight_number )  where (date(departure_time) = \""
 							+ session.getAttribute("search") + 
 							"\" or date(DATE_ADD(departure_time, interval 1 day)) = \"" 
 							+ session.getAttribute("search") + 
@@ -158,9 +159,10 @@ try {
 					}
 			}
 			else if((request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("2")) || session.getAttribute("felx") == "2"){
+				out.print("Date: " + session.getAttribute("search"));
 				session.setAttribute("felx", "2");
 				if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
-					str = "SELECT * FROM otrs.flight where departing_airport =\"" 
+					str = "SELECT * FROM otrs.flight join flys using( flight_number )  where departing_airport =\"" 
 						+ session.getAttribute("Start") + 
 						"\" and arriving_airport = \"" 
 						+ session.getAttribute("End") + 
@@ -176,7 +178,7 @@ try {
 						+ session.getAttribute("search") + "\")"
 						+ filter + " order by " + orderby;
 				}else if (session.getAttribute("Start") != ""){
-					str = "SELECT * FROM otrs.flight where departing_airport =\""
+					str = "SELECT * FROM otrs.flight join flys using( flight_number )  where departing_airport =\""
 						+ session.getAttribute("Start") + 
 						"\" and (date(departure_time) = \"" 
 						+ session.getAttribute("search") + 
@@ -190,7 +192,7 @@ try {
 						+ session.getAttribute("search") + "\")"
 						+ filter + " order by " + orderby;
 				}else if (session.getAttribute("End") != ""){
-					str = "SELECT * FROM otrs.flight where arriving_airport = \"" 
+					str = "SELECT * FROM otrs.flight join flys using( flight_number )  where arriving_airport = \"" 
 						+ session.getAttribute("End") + 
 						"\" and (date(departure_time) = \"" 
 						+ session.getAttribute("search") +
@@ -204,7 +206,7 @@ try {
 						+ session.getAttribute("search") + "\")"
 						+ filter + " order by " + orderby;
 				}else{	
-					str = "SELECT * FROM otrs.flight where (date(departure_time) = \""
+					str = "SELECT * FROM otrs.flight join flys using( flight_number )  where (date(departure_time) = \""
 						+ session.getAttribute("search") +
 						"\" or date(DATE_ADD(departure_time, interval 2 day)) = \"" 
 						+ session.getAttribute("search") + 
@@ -219,9 +221,10 @@ try {
 				}
 		}
 		else if((request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("3")) || session.getAttribute("felx") == "3"){
+			out.print("Date: " + session.getAttribute("search"));
 			session.setAttribute("felx", "3");
 				if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
-					str = "SELECT * FROM otrs.flight where departing_airport =\"" 
+					str = "SELECT * FROM otrs.flight join flys using( flight_number )  where departing_airport =\"" 
 						+ session.getAttribute("Start") + 
 						"\" and arriving_airport = \"" 
 						+ session.getAttribute("End") + 
@@ -241,7 +244,7 @@ try {
 						+ session.getAttribute("search") + "\")"
 						+ filter + " order by " + orderby;
 				}else if (session.getAttribute("Start") != ""){
-					str = "SELECT * FROM otrs.flight where departing_airport =\""
+					str = "SELECT * FROM otrs.flight join flys using( flight_number )  where departing_airport =\""
 						+ session.getAttribute("Start") + 
 						"\" and (date(departure_time) = \"" 
 						+ session.getAttribute("search") +
@@ -259,7 +262,7 @@ try {
 						+ session.getAttribute("search") + "\")"
 						+ filter + " order by " + orderby;
 				}else if (session.getAttribute("End") != ""){
-					str = "SELECT * FROM otrs.flight where arriving_airport = \"" 
+					str = "SELECT * FROM otrs.flight join flys using( flight_number )  where arriving_airport = \"" 
 						+ session.getAttribute("End") + 
 						"\" and (date(departure_time) = \"" 
 						+ session.getAttribute("search") +
@@ -277,7 +280,7 @@ try {
 						+ session.getAttribute("search") + "\")"
 						+ filter + " order by " + orderby;
 				}else{	
-					str = "SELECT * FROM otrs.flight where (date(departure_time) = \""
+					str = "SELECT * FROM otrs.flight join flys using( flight_number )  where (date(departure_time) = \""
 						+ session.getAttribute("search") +
 						"\" or date(DATE_ADD(departure_time, interval 3 day)) = \"" 
 						+ session.getAttribute("search") + 
@@ -295,6 +298,7 @@ try {
 					
 				}
 		}
+
 			ResultSet result = stmt.executeQuery(str);
 			int count = 0;
 			
@@ -333,7 +337,7 @@ try {
 				} 
 			}
 				
-				out.print("Flight number:" + result.getInt("flight_number") + ", Start: " + result.getString("departing_airport") + ", End: " + result.getString("arriving_airport") + ", Take-off Time: " + result.getTimestamp("departure_time") + ", Arrival Time: " + result.getTimestamp("arrival_time")+ ", Price: " + result.getInt("base_price"));
+				out.print("Flight number:" + result.getInt("flight_number") + ", Airline: " + result.getString("airline_id") + ", Start: " + result.getString("departing_airport") + ", End: " + result.getString("arriving_airport") + ", Take-off Time: " + result.getTimestamp("departure_time") + ", Arrival Time: " + result.getTimestamp("arrival_time")+ ", Price: " + result.getInt("base_price"));
 				int flight_num = result.getInt("flight_number");
 				%>
 				<form name = <%="form" + count %> method="get" action = "Book.jsp">

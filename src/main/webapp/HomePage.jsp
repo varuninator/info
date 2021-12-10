@@ -116,7 +116,7 @@ try {
 			 				<input type="submit" value="Set User" />
 						</form>
 						<form method="get" action="Browse.jsp">
-							<label>Date for one way trip (yyyy-mm-dd): <input name = "search"/></label>
+							<label>Date for one way trip (yyyy-mm-dd)*: <input name = "search"/></label>
 							<label>Starting Airport(XXX): <input name = "airStart"/></label>
 							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
 							<input type = "hidden" name = "oneway" value = "true">
@@ -130,8 +130,8 @@ try {
 						</form>
 						</body>
 						<form method="get" action="Browse.jsp">
-							<label>Date for round start trip (yyyy-mm-dd): <input name = "search"/></label>
-							<label>Date for round end trip (yyyy-mm-dd): <input name = "search2"/></label>
+							<label>Date for round start trip (yyyy-mm-dd)*: <input name = "search"/></label>
+							<label>Date for returning flight (yyyy-mm-dd)*: <input name = "search2"/></label>
 							<label>Starting Airport(XXX): <input name = "airStart"/></label>
 							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
 							<input type = "hidden" name = "oneway" value = "false">
@@ -143,6 +143,7 @@ try {
 			 				</select>&nbsp;<br> <input type="submit" value="Submit">
 			 				<%-- <input type="submit" value="Search" />--%>
 						</form>
+						<%out.print("required*");%>
 						<br>
 						<form method="get" action="rep_UserInformation.jsp">
 							<label>Search User: <input name = "search"/></label>
@@ -176,7 +177,7 @@ try {
 						<br>
 						<body>
 						<form method="get" action="Browse.jsp">
-							<label>Date for one way trip (yyyy-mm-dd): <input name = "search"/></label>
+							<label>Date for one way trip (yyyy-mm-dd)*: <input name = "search"/></label>
 							<label>Starting Airport(XXX): <input name = "airStart"/></label>
 							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
 							<input type = "hidden" name = "oneway" value = "true">
@@ -193,8 +194,8 @@ try {
 						<br>
 						</body>
 						<form method="get" action="Browse.jsp">
-							<label>Date for round start trip (yyyy-mm-dd): <input name = "search"/></label>
-							<label>Date for round end trip (yyyy-mm-dd): <input name = "search2"/></label>
+							<label>Date for round start trip (yyyy-mm-dd)*: <input name = "search"/></label>
+							<label>Date for returning flight (yyyy-mm-dd)*: <input name = "search2"/></label>
 							<label>Starting Airport(XXX): <input name = "airStart"/></label>
 							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
 							<input type = "hidden" name = "oneway" value = "false">
@@ -215,7 +216,7 @@ try {
 						</form>
 						<%
 						boolean full = false;
-						
+						out.print("required*");
 						//out.print(session.getAttribute("f_num"));
 							ArrayList<Integer> decWLs = new ArrayList<Integer>();
 							String delWL = "";
@@ -258,7 +259,7 @@ try {
 		
 		
 		
-		
+			
 		
 			
 			
