@@ -106,7 +106,7 @@ try {
 							 session.setAttribute("ticket1", tix);
 							 session.setAttribute("for1", for_);
 							 response.sendRedirect("Browse.jsp"); 
-						 }else{
+						 }else if(session.getAttribute("round_trip") == "true"){
 							 session.setAttribute("round_trip", "false");
 							 session.setAttribute("flex", "");
 							 
@@ -117,6 +117,12 @@ try {
 								 ps.executeUpdate(); 
 							 }
 							 
+							 ps = con.prepareStatement(tix);
+							 ps.executeUpdate();
+							 ps = con.prepareStatement(for_);
+							 ps.executeUpdate();
+							 session.removeAttribute("search2");
+						 }else{
 							 ps = con.prepareStatement(tix);
 							 ps.executeUpdate();
 							 ps = con.prepareStatement(for_);
@@ -133,7 +139,7 @@ try {
 						 session.setAttribute("ticket1", tix);
 						 session.setAttribute("for1", for_);
 						 response.sendRedirect("Browse.jsp"); 
-					 }else{
+					 }else if(session.getAttribute("round_trip") == "true"){
 						 session.setAttribute("round_trip", "false");
 						 session.setAttribute("flex", "");
 						 
@@ -144,6 +150,12 @@ try {
 							 ps.executeUpdate(); 
 						 }
 						 
+						 ps = con.prepareStatement(tix);
+						 ps.executeUpdate();
+						 ps = con.prepareStatement(for_);
+						 ps.executeUpdate();
+						 session.removeAttribute("search2");
+					 }else{
 						 ps = con.prepareStatement(tix);
 						 ps.executeUpdate();
 						 ps = con.prepareStatement(for_);

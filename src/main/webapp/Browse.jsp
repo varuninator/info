@@ -26,7 +26,8 @@ try {
 			
 			String orderby = "base_price";
 			String filter = "";
-			
+			out.print(session.getAttribute("search2"));
+			out.print(session.getAttribute("round_trip"));
 			if(request.getParameter("price_greater") != "" && request.getParameter("price_greater") != null){
 				filter += " and base_price > " + request.getParameter("price_greater");
 			}
