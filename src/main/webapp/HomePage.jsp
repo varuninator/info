@@ -115,10 +115,11 @@ try {
 							<label>Pick User:   <input name = "SearchUser"/></label>
 			 				<input type="submit" value="Set User" />
 						</form>
-						<form method="get" action="rep_Browse.jsp">
+						<form method="get" action="Browse.jsp">
 							<label>Date for one way trip (yyyy-mm-dd): <input name = "search"/></label>
 							<label>Starting Airport(XXX): <input name = "airStart"/></label>
 							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
+							<input type = "hidden" name = "oneway" value = "true">
 							 <select name="flexibility" size=1>
 							<option value="0">No Flexibility</option>
 							<option value="1">One Day Flexibility</option>
@@ -128,11 +129,12 @@ try {
 			 				<%-- <input type="submit" value="Search" />--%>
 						</form>
 						</body>
-						<form method="get" action="rep_Browse.jsp">
+						<form method="get" action="Browse.jsp">
 							<label>Date for round start trip (yyyy-mm-dd): <input name = "search"/></label>
 							<label>Date for round end trip (yyyy-mm-dd): <input name = "search2"/></label>
 							<label>Starting Airport(XXX): <input name = "airStart"/></label>
 							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
+							<input type = "hidden" name = "oneway" value = "false">
 							<select name="flexibility" size=1>
 							<option value="0">No Flexibility</option>
 							<option value="1">One Day Flexibility</option>
@@ -177,6 +179,7 @@ try {
 							<label>Date for one way trip (yyyy-mm-dd): <input name = "search"/></label>
 							<label>Starting Airport(XXX): <input name = "airStart"/></label>
 							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
+							<input type = "hidden" name = "oneway" value = "true">
 							 <select name="flexibility" size=1>
 							<option value="0">No Flexibility</option>
 							<option value="1">One Day Flexibility</option>
@@ -194,6 +197,7 @@ try {
 							<label>Date for round end trip (yyyy-mm-dd): <input name = "search2"/></label>
 							<label>Starting Airport(XXX): <input name = "airStart"/></label>
 							<label>Ending airport Airport(XXX): <input name = "airEnd"/></label>
+							<input type = "hidden" name = "oneway" value = "false">
 							<select name="flexibility" size=1>
 							<option value="0">No Flexibility</option>
 							<option value="1">One Day Flexibility</option>
