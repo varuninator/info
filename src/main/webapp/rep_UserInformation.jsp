@@ -59,12 +59,12 @@ try {
 			if(ticket_class != null  && ticket_class != "" && ticket_id != 0){
 
 					if(ticket_class.equals("first")){
-						str = "update ticket set first_class = 1 and business_class = 0 and economy_class = 0" + " where id_num = " + ticket_id;
+						str = "update ticket set first_class = 1, business_class = 0, economy_class = 0" + " where id_num = " + ticket_id;
 						PreparedStatement ps = con.prepareStatement(str);
 						ps.executeUpdate();
 					}
 					if(ticket_class.equals("business")){
-						str = "update ticket set first_class = 0 and business_class = 1 and economy_class = 0" + " where id_num = " + ticket_id;
+						str = "update ticket set first_class = 0, business_class = 1, economy_class = 0" + " where id_num = " + ticket_id;
 						PreparedStatement ps = con.prepareStatement(str);
 						ps.executeUpdate();
 						}
