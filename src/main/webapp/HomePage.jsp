@@ -214,10 +214,55 @@ try {
 		  				<input type="submit" value="Ask Questions!" />
 						</form>
 						<%
+						boolean full = false;
+						
+						//out.print(session.getAttribute("f_num"));
+							ArrayList<Integer> decWLs = new ArrayList<Integer>();
+							String delWL = "";
+							str = "SELECT * FROM flys INNER JOIN aircraft ON aircraft.aircraft_id = flys.aircraft_id INNER JOIN flight ON flight.flight_number = flys.flight_number INNER JOIN waitlist ON flys.flight_number = waitlist.flight_number WHERE waitlist.username = \"" + session.getAttribute("user") + "\"";
+							//out.print(str);
+							result = stmt.executeQuery(str);
+							int currentFlight = 0;
+							out.print("<br/>WAITLIST ALERTS: <br/>");
+							boolean checkUpdate = false;
+							while(result.next()){
+									if(result.getInt("passengers") < result.getInt("number_of_seats") && result.getInt("spot") == 1){
+										out.print("FLIGHT: " + result.getInt("flight_number")+ " HAS OPENED<br/>");
+										delWL = "DELETE FROM otrs.waitlist WHERE username = \"" + result.getString("username") + "\"" + " AND " + "spot = " + result.getInt("spot") + " AND" + " flight_number = " + result.getInt("flight_number");
+										//out.print(delWL);
+										currentFlight = result.getInt("flight_number");
+										PreparedStatement ps = con.prepareStatement(delWL);
+										ps.executeUpdate();
+										 checkUpdate = true;
+										break;
+									}
+									
+							}
+							
+							
+							
+							if(checkUpdate==true){
+								str = "SELECT * FROM waitlist WHERE flight_number = " + currentFlight;
+								result = stmt.executeQuery(str);
+								String upSpot = "UPDATE otrs.waitlist SET spot = spot-1 WHERE flight_number = " + currentFlight;
+								while(result.next()){
+									PreparedStatement ps = con.prepareStatement(upSpot);
+									ps.executeUpdate();
+									//out.print(result.getInt("spot"));
+								}
+							}
 					}
 					
 				}
 			}
+		
+		
+		
+		
+		
+			
+			
+			
 			
 			if(!loggedIn){
 				out.print("Sorry you have entered an incorrect username or password");
