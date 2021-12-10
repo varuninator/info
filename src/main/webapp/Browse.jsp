@@ -65,6 +65,7 @@ try {
 				if(sch != null){
 					session.setAttribute("search", sch);
 					session.setAttribute("round_trip", "false");
+					
 				}else if(session.getAttribute("search2") != null){
 					String temp = String.valueOf(session.getAttribute("search"));
 					session.setAttribute("search", session.getAttribute("search2"));
@@ -100,9 +101,12 @@ try {
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 			//ONE way Search
 			
-			if((request.getParameter("flexibility") == null && session.getAttribute("round_trip") != "true") || (request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("0"))){
+			if(request.getParameter("flexibility") != null){
+				session.setAttribute("flex", "");
+			}
+			if((request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("0")) || (session.getAttribute("flex") != null && String.valueOf(session.getAttribute("flex")).equals("0"))){
 				out.print("Date: " + session.getAttribute("search"));
-				session.setAttribute("felx", "0");
+				session.setAttribute("flex", "0");
 					if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
 						str = "SELECT * FROM otrs.flight join flys using( flight_number )  where departing_airport =\"" + session.getAttribute("Start") + "\" and arriving_airport = \"" + session.getAttribute("End") + "\" and date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 					}else if (session.getAttribute("Start") != ""){
@@ -113,9 +117,9 @@ try {
 						str = "SELECT * FROM otrs.flight join flys using( flight_number )  where date(departure_time) = \"" + session.getAttribute("search") + "\"" + filter + " order by " + orderby;
 					}
 			}
-			else if((request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("1")) || session.getAttribute("felx") == "1"){
+			else if((request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("1")) || String.valueOf(session.getAttribute("flex")).equals("1")){
 				out.print("Date: " + session.getAttribute("search"));
-				session.setAttribute("felx", "1");
+				session.setAttribute("flex", "1");
 					if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
 						str = "SELECT * FROM otrs.flight join flys using( flight_number )  where departing_airport =\"" 
 							+ session.getAttribute("Start") + 
@@ -159,9 +163,9 @@ try {
 						
 					}
 			}
-			else if((request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("2")) || session.getAttribute("felx") == "2"){
+			else if((request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("2")) || String.valueOf(session.getAttribute("flex")).equals("2")){
 				out.print("Date: " + session.getAttribute("search"));
-				session.setAttribute("felx", "2");
+				session.setAttribute("flex", "2");
 				if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
 					str = "SELECT * FROM otrs.flight join flys using( flight_number )  where departing_airport =\"" 
 						+ session.getAttribute("Start") + 
@@ -221,9 +225,9 @@ try {
 					
 				}
 		}
-		else if((request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("3")) || session.getAttribute("felx") == "3"){
+		else if((request.getParameter("flexibility") != null && request.getParameter("flexibility").equals("3")) || String.valueOf(session.getAttribute("flex")).equals("3")){
 			out.print("Date: " + session.getAttribute("search"));
-			session.setAttribute("felx", "3");
+			session.setAttribute("flex", "3");
 				if(session.getAttribute("Start") != "" && session.getAttribute("End") != ""){
 					str = "SELECT * FROM otrs.flight join flys using( flight_number )  where departing_airport =\"" 
 						+ session.getAttribute("Start") + 
@@ -382,7 +386,6 @@ try {
 				<%
 				count++;
 			}
-			
 			
 				
 						

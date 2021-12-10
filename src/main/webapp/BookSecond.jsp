@@ -22,10 +22,12 @@ try {
 			Statement stmt = con.createStatement();
 			//Get the combobox from the index.jsp
 			
-			//String sch = request.getParameter("search");
-			
 			String depTime = Collections.list(request.getParameterNames()).get(1);
 			depTime = depTime.substring(0, 10) + " " + depTime.substring(10);
+			
+			
+			//String sch = request.getParameter("search");
+			
 			
 			boolean booked = false;
 			
@@ -96,43 +98,57 @@ try {
 					result = stmt.executeQuery(str);
 					result.next();
 					if(result.getString("username") != null){
-						tix = "INSERT otrs.ticket (user_delete, flight_number, departure_time, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\", \'" + depTime + "\', \"" + session.getAttribute("rep_user") + "\""+", " + (max_seat + 1) + ", \"" + result.getString("first_name") + "\""+", " +  "\"" + result.getString("last_name") + "\"" + ", true " + ", false" + ", false" + ")";	
-						//out.print(tix);
-						  ps = con.prepareStatement(tix);
-						 ps.executeUpdate();
-						 
-						String for_ = "INSERT otrs.for_ (flight_number) value (" + Collections.list(request.getParameterNames()).get(0)+ ")";
-						//out.print(for_);
-						ps = con.prepareStatement(for_);
-						 ps.executeUpdate();
-						 
+						tix = "INSERT otrs.ticket (user_delete, flight_number, departure_time, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\", \'" + depTime + "\', \"" + session.getAttribute("user") + "\""+", " + (max_seat + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", true " + ", false" + ", false" + ")";	
 
-						 
-						 //redirect to browse for round trip
-						 if(session.getAttribute("search2") != null && session.getAttribute("round_trip") != "true"){
+						String for_ = "INSERT otrs.for_ (flight_number) value (" + Collections.list(request.getParameterNames()).get(0)+ ")";
+
+						if(session.getAttribute("search2") != null && session.getAttribute("round_trip") != "true"){
+							 session.setAttribute("ticket1", tix);
+							 session.setAttribute("for1", for_);
 							 response.sendRedirect("Browse.jsp"); 
+						 }else{
+							 session.setAttribute("round_trip", "false");
+							 session.setAttribute("flex", "");
+							 
+							 if(session.getAttribute("ticket1") != null){
+								 ps = con.prepareStatement(String.valueOf(session.getAttribute("ticket1")));
+								 ps.executeUpdate();
+								 ps = con.prepareStatement(String.valueOf(session.getAttribute("for1")));
+								 ps.executeUpdate(); 
+							 }
+							 
+							 ps = con.prepareStatement(tix);
+							 ps.executeUpdate();
+							 ps = con.prepareStatement(for_);
+							 ps.executeUpdate();
 						 }
-						 session.setAttribute("round_trip", "false");
-						 session.setAttribute("flex", "");
 					}
 				}else{
 					tix = "INSERT otrs.ticket (user_delete, flight_number, departure_time, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\", \'" + depTime + "\', \"" + session.getAttribute("user") + "\""+", " + (max_seat + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", true " + ", false" + ", false" + ")";	
 					//out.print(tix);
-					  ps = con.prepareStatement(tix);
-					 ps.executeUpdate();
 					 
-					String for_ = "INSERT otrs.for_ (flight_number) value (" + Collections.list(request.getParameterNames()).get(0)+ ")";
-					//out.print(for_);
-					ps = con.prepareStatement(for_);
-					 ps.executeUpdate();
+					String for_ = "INSERT otrs.for_ (flight_number) value (" + Collections.list(request.getParameterNames()).get(0) + ")";
 
-
-					 
-					 //redirect to browse for round trip
-					 if(session.getAttribute("search2") != null && session.getAttribute("round_trip") != "true"){
+					if(session.getAttribute("search2") != null && session.getAttribute("round_trip") != "true"){
+						 session.setAttribute("ticket1", tix);
+						 session.setAttribute("for1", for_);
 						 response.sendRedirect("Browse.jsp"); 
+					 }else{
+						 session.setAttribute("round_trip", "false");
+						 session.setAttribute("flex", "");
+						 
+						 if(session.getAttribute("ticket1") != null){
+							 ps = con.prepareStatement(String.valueOf(session.getAttribute("ticket1")));
+							 ps.executeUpdate();
+							 ps = con.prepareStatement(String.valueOf(session.getAttribute("for1")));
+							 ps.executeUpdate(); 
+						 }
+						 
+						 ps = con.prepareStatement(tix);
+						 ps.executeUpdate();
+						 ps = con.prepareStatement(for_);
+						 ps.executeUpdate();
 					 }
-					 session.setAttribute("round_trip", "false");
 				}
 			}
 			else{
