@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
@@ -16,7 +18,7 @@ try {
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();
 			boolean userExist = false;
-			
+			String checkClass = "";
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			//Get the combobox from the index.jsp
@@ -67,20 +69,68 @@ try {
 					<%
 					
 					out.print("<br/>ALL tickets bought by " + session.getAttribute("userADsearch") + ":<br/><br/>");
-					str = "SELECT * FROM ticket";
+					str = "SELECT * FROM ticket t, user u, flight f, airline_company a, flys fl WHERE u.username = t.username AND t.departure_time = f.departure_time AND f.flight_number = fl.flight_number AND fl.airline_id = a.airline_id ORDER BY t.departure_time DESC, t.id_num ASC;";
 				    result = stmt.executeQuery(str);
+				    
+					boolean hasReservations = false;
+				    
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+					SimpleDateFormat updatedDateFormat = new SimpleDateFormat("dd MMM yy hh:mm a");
 				    while (result.next()){
-				    	if ((result.getString("username").equals(session.getAttribute("userADsearch")))&&(result.getString("user_delete").equals("0"))){	
-				    		if(result.getString("first_class").equals("1")){
-				    			out.print("Ticket #: "+ result.getInt("id_num") +", Flight #: "+ result.getInt("flight_number") +", Username: "+ result.getString("username") + ", Seat #: " + result.getInt("seat_number") + ", First Name: "+ result.getString("first_name") + ", Last Name: " + result.getString("last_name") + ", Class: First Class<br/>");
-							}
-				    		else if(result.getString("business_class").equals("1")){
-				    			out.print("Ticket #: "+ result.getInt("id_num") +", Flight #: "+ result.getInt("flight_number") +", Username: "+ result.getString("username") + ", Seat #: " + result.getInt("seat_number") + ", First Name: "+ result.getString("first_name") + ", Last Name: " + result.getString("last_name") + ", Class: Business Class<br/>");
-							}
-				    		else if(result.getString("economy_class").equals("1")){
-				    			out.print("Ticket #: "+ result.getInt("id_num") +", Flight #: "+ result.getInt("flight_number") +", Username: "+ result.getString("username") + ", Seat #: " + result.getInt("seat_number") + ", First Name: "+ result.getString("first_name") + ", Last Name: " + result.getString("last_name") + ", Class: Economy Class<br/>");
-							}
-				    	}
+				    	
+						Date departingDate = dateFormat.parse(result.getString("departure_time"));
+						Date arrivingDate = dateFormat.parse(result.getString("arrival_time"));
+						String updatedDepartingDate = updatedDateFormat.format(departingDate);
+						String updatedArrivingDate = updatedDateFormat.format(arrivingDate);
+						
+
+						if(result.getString("first_class").equals("1")){
+							checkClass = "First Class";
+						}
+						else if(result.getString("business_class").equals("1")){
+							checkClass = "Business Class";
+						}
+						else{
+							checkClass = "Economy Class";
+						}
+						
+						
+						//Total Fare Calculation
+						double baseFare = result.getInt("base_price") - 30;
+						if(checkClass.equals("Economy Class")) {
+							
+						} else if(checkClass.equals("Business Class")) {
+							baseFare = baseFare * 1.5 + 30;
+						} else if(checkClass.equals("First Class")) {
+							baseFare = baseFare * 2 + 30;
+						}
+						
+						String firstName = result.getString("first_name");
+						String lastName = result.getString("last_name");
+						
+						out.print("<br/>");
+						out.print("________________________________________");
+						out.print("________________________________________");
+						out.print("<br/>");
+						out.print("Airline ID: " + result.getString("airline_id"));
+						//use the operates table to connect flight_number to aircraft_id and airline_id
+						out.print(" - - - - - - - - - - - - - - - - - - - - ");
+						out.print(checkClass + " Boarding Pass");
+						out.print("<br/>");
+						out.print("Passenger: " + firstName + " " + lastName);
+						out.print("<br/>");
+						out.print("From: " + result.getString("departing_airport") + " - - - - - - - - - - Departure Date: " + updatedDepartingDate.substring(0, 9) + " - - - - - - - - - - Departure Time: " + updatedDepartingDate.substring(9) + "<br/>");
+						out.print("To: " + result.getString("arriving_airport") + " - - - - - - - - - - Arrival Date: " + updatedArrivingDate.substring(0, 9) + " - - - - - - - - - - Arrival Time: " + updatedArrivingDate.substring(9) + "<br/>");
+						out.print(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Total Fare: $" + baseFare);
+						out.print("<br/>");
+						out.print("Flight #: " + result.getString("flight_number") + " - - - - - - - - - - - - - - - - - - - - Seat: " + result.getInt("seat_number"));
+						out.print("<br/>");
+						out.print("Ticket ID #: " + result.getInt("id_num") + "<br/>");
+						out.print("________________________________________");
+						out.print("________________________________________");
+						out.print("<br/>");
+						//out.print("Ticket Number: "+ result.getInt("id_num") + ", flight number: " + result.getInt("flight_number") + ", username: " + result.getString("username") + ", seat number: "+ result.getInt("seat_number")+ ", first name: " + result.getString("first_name") + ", last name: " + result.getString("last_name")+ ", class: " + checkClass + "<br/>");
+						hasReservations = true;
 				    }
 					
 					

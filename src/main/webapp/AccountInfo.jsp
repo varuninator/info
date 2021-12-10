@@ -41,9 +41,19 @@ try {
 					lastName = result.getString("last_name");
 				}
 			}
-			
-			str = "SELECT * FROM ticket t, user u, flight f WHERE u.username = t.username AND t.flight_number = f.flight_number ORDER BY t.flight_number ASC";
+			str = "SELECT * FROM ticket t, user u, flight f, airline_company a, flys fl WHERE u.username = t.username AND t.departure_time = f.departure_time AND f.flight_number = fl.flight_number AND fl.airline_id = a.airline_id ORDER BY t.departure_time DESC, t.id_num ASC;";
 			result = stmt.executeQuery(str);
+			
+			%>
+			<form method="get" action="Cancel.jsp">
+				<input type="submit" value="Cancel A Reservation" />
+			</form>
+			<form method="get" action="HomePage.jsp">
+				<input type="submit" value="Return to Home Page" />
+			</form>	
+			<br>		
+			<%
+			
 			out.print("Reservation Info: <br/>");
 			
 			boolean hasReservations = false;
@@ -86,8 +96,7 @@ try {
 					out.print("________________________________________");
 					out.print("________________________________________");
 					out.print("<br/>");
-					out.print("Airline ID: " + "AA");
-					//result.getString("airline_id") 
+					out.print("Airline ID: " + result.getString("airline_id"));
 					//use the operates table to connect flight_number to aircraft_id and airline_id
 					out.print(" - - - - - - - - - - - - - - - - - - - - ");
 					out.print(checkClass + " Boarding Pass");
@@ -114,17 +123,6 @@ try {
 			}
 			
 			
-			%>
-			<br>
-			<form method="get" action="Cancel.jsp">
-				<input type="submit" value="Cancel A Reservation" />
-			</form>
-			<form method="get" action="HomePage.jsp">
-				<input type="submit" value="Return to Home Page" />
-			</form>			
-			<%
-				
-
 } catch (Exception e) {
 	out.print(e);
 }

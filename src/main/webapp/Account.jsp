@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Account</title>
 </head>
 <body>
 <%
@@ -24,6 +24,8 @@ try {
 			
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 			//String str = "SELECT * FROM user";
+			String depTime = Collections.list(request.getParameterNames()).get(1);
+			depTime = depTime.substring(0, 10) + " " + depTime.substring(10);
 			
 			//Run the query against the database.
 			//ResultSet result = stmt.executeQuery(str);
@@ -62,10 +64,10 @@ try {
 								+ Collections.list(request.getParameterNames()).get(0) + ", \"" + session.getAttribute("user") + "\", " + 1 + ")";*/
 						boolean checkUser = false;		
 					
-								while(result.next()){
+							while(result.next()){
 									//out.print(result.getInt("passengers"));
 									//out.print(result.getInt("number_of_seats"));
-								if(session.getAttribute("user").equals(result.getString("username"))&&Collections.list(request.getParameterNames()).get(0).equals(result.getString("flight_number"))){
+								if(session.getAttribute("user").equals(result.getString("username")) && Collections.list(request.getParameterNames()).get(0).equals(result.getString("flight_number")) && String.valueOf(result.getTimestamp("departure_time")).equals(depTime)){
 										out.print("You have already been put in waitlist. Please try another flight. ");
 												
 												wl = false;
@@ -76,7 +78,7 @@ try {
 								}
 									
 								
-								}
+							}
 								
 								
 								
@@ -86,7 +88,7 @@ try {
 								if(checkUser==false){	//necessary to check if booking still available			
 									while(result.next()){
 										
-										if(result.getInt("passengers")<result.getInt("number_of_seats")&&Collections.list(request.getParameterNames()).get(0).equals(result.getString("flight_number"))){
+										if(result.getInt("passengers")<result.getInt("number_of_seats")&&Collections.list(request.getParameterNames()).get(0).equals(result.getString("flight_number")) && String.valueOf(result.getTimestamp("departure_time")).equals(depTime)){
 												//out.print("GREATER");
 														
 														
@@ -109,13 +111,13 @@ try {
 								//out.print(wl);
 								if(wl == true&&passenger>=seats){
 									
-									str = "Select Max(CAST(spot as SIGNED)) as spot from waitlist where flight_number = " + Collections.list(request.getParameterNames()).get(0);
+									str = "Select Max(CAST(spot as SIGNED)) as spot from waitlist where flight_number = " + Collections.list(request.getParameterNames()).get(0) + " AND departure_time = \'" + depTime + "\'";
 									
 									result = stmt.executeQuery(str);
 									result.next();
 									
-									String insert = "INSERT INTO waitlist(flight_number, username, spot) value ("
-											+ Collections.list(request.getParameterNames()).get(0) + ", \"" + session.getAttribute("user") + "\""+", " + (result.getInt("spot") + 1) +")"; //[increaments spot to check waitlist you can just say if the spot is less than any other spots that correspond to the flight number he is next in line]
+									String insert = "INSERT INTO waitlist(flight_number, departure_time, username, spot) value ("
+											+ Collections.list(request.getParameterNames()).get(0) + ", \'" + depTime + "\', \"" + session.getAttribute("user") + "\""+", " + (result.getInt("spot") + 1) +")"; //[increaments spot to check waitlist you can just say if the spot is less than any other spots that correspond to the flight number he is next in line]
 									 PreparedStatement ps = con.prepareStatement(insert);
 
 										//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself

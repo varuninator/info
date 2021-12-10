@@ -53,6 +53,7 @@ try {
 		String decPass = "";
 		int count = 0;
 		int flightNum = 0;
+		String depTime = "";
 		boolean invalid = true;
 		if(cancel!=null){
 			while(result.next()){
@@ -65,6 +66,7 @@ try {
 						out.print("Deleted ticket with id number: " + result.getInt("id_num"));
 						invalid = false;
 						flightNum = result.getInt("flight_number");
+						depTime = String.valueOf(result.getTimestamp("departure_time"));
 						
 						/* str = "SELECT * FROM flys INNER JOIN aircraft ON aircraft.aircraft_id = flys.aircraft_id INNER JOIN flight ON flight.flight_number = flys.flight_number WHERE flight.flight_number = " + flightNum;
 						result = stmt.executeQuery(str);
@@ -82,7 +84,7 @@ try {
 						 str = "SELECT * FROM otrs.flight";
 						result = stmt.executeQuery(str);
 						result.next();
-						decPass = "UPDATE otrs.flight SET passengers = passengers - 1 WHERE flight_number = " + flightNum;
+						decPass = "UPDATE otrs.flight SET passengers = passengers - 1 WHERE flight_number = " + flightNum + " AND departure_time = \'" + depTime + "\'";
 						ps = con.prepareStatement(decPass);
 						ps.executeUpdate();
 						

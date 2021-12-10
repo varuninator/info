@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
@@ -337,32 +338,44 @@ try {
 				} 
 			}
 				
-				out.print("Flight number:" + result.getInt("flight_number") + ", Airline: " + result.getString("airline_id") + ", Start: " + result.getString("departing_airport") + ", End: " + result.getString("arriving_airport") + ", Take-off Time: " + result.getTimestamp("departure_time") + ", Arrival Time: " + result.getTimestamp("arrival_time")+ ", Price: " + result.getInt("base_price"));
+				//Timestamp depTime = result.getTimestamp("departure_time");
+				//session.setAttribute("depTime", depTime);
+				
+				out.print("Flight number:" + result.getInt("flight_number") + ", Airline: " + result.getString("airline_id") + ", Start: " + result.getString("departing_airport") + ", End: " + result.getString("arriving_airport") + ", Take-off Time: " + result.getTimestamp("departure_time") + ", Arrival Time: " + result.getTimestamp("arrival_time")+ ", Price: $" + result.getInt("base_price"));
 				int flight_num = result.getInt("flight_number");
+				String depTime = String.valueOf(result.getTimestamp("departure_time"));
+				depTime = depTime.substring(0, 10) + depTime.substring(11);
+				//out.print("<br/>" + depTime);
+				
 				%>
 				<form name = <%="form" + count %> method="get" action = "Book.jsp">
 				<input type = "hidden" name = <%=flight_num %>>
+				<input type = "hidden" name = <%=depTime %>>
   				<input type="submit" value="Book First Class" onclick = <%="func" + count %>()/>
 				</form>
 				
 				<form name = <%="form" + count %> method="get" action = "BookSecond.jsp">
 				<input type = "hidden" name = <%=flight_num %>>
+				<input type = "hidden" name = <%=depTime %>>
   				<input type="submit" value="Book Business Class" onclick = <%="func" + count %>()/>
 				</form>
 				
 				<form name = <%="form" + count %> method="get" action = "BookThird.jsp">
 				<input type = "hidden" name = <%=flight_num %>>
+				<input type = "hidden" name = <%=depTime %>>
   				<input type="submit" value="Book Economy Class" onclick = <%="func" + count %>()/>
 				</form>
 				
 				<form name = <%="form" + count %> method="get" action = "Account.jsp">
 				<input type = "hidden" name = <%=flight_num %>>
+				<input type = "hidden" name = <%=depTime %>>
   				<input type="submit" value="Join Waitlist" onclick = <%="func" + count %>()/>
 				</form>
 				<br>
 				<script language = "JavaScript">
 					function <%="func" + count %>(){
 						document.<%="form" + count %>.<%=flight_num%>.value = "yes";
+						document.<%="form" + count %>.<%=depTime%>.value = "yes";
 						<%="form" + count %>.submit();
 					}
 				</script>

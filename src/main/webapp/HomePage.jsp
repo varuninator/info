@@ -110,6 +110,12 @@ try {
 			  				<input type="submit" value="Logout" />
 						</form>
 						<br>
+						<%
+						out.print(" -----------------<br/>");
+						out.print("REQUIRED*<br/>");
+						out.print(" -----------------<br/>");
+						%>
+						<br>
 						<body>	
 						<form name = userForm method = get action = "HomePage.jsp">
 							<label>Pick User:   <input name = "SearchUser"/></label>
@@ -143,7 +149,6 @@ try {
 			 				</select>&nbsp;<br> <input type="submit" value="Submit">
 			 				<%-- <input type="submit" value="Search" />--%>
 						</form>
-						<%out.print("required*");%>
 						<br>
 						<form method="get" action="rep_UserInformation.jsp">
 							<label>Search User: <input name = "search"/></label>
@@ -174,6 +179,12 @@ try {
 						<form method="get" action="HelloWorld.jsp">
 			  				<input type="submit" value="Logout" />
 						</form>
+						<br>
+						<%
+						out.print(" -----------------<br/>");
+						out.print("REQUIRED*<br/>");
+						out.print(" -----------------<br/>");
+						%>
 						<br>
 						<body>
 						<form method="get" action="Browse.jsp">
@@ -209,14 +220,13 @@ try {
 						</form>
 					    <br>
 						<form method="get" action="AccountInfo.jsp">
-		  				<input type="submit" value="Account Info" />
+		  				<input type="submit" value="Account Info and Reservation Cancellations" />
 						</form>
 						<form method="get" action="UserQuestions.jsp">
 		  				<input type="submit" value="Ask Questions!" />
 						</form>
 						<%
 						boolean full = false;
-						out.print("required*");
 						//out.print(session.getAttribute("f_num"));
 							ArrayList<Integer> decWLs = new ArrayList<Integer>();
 							String delWL = "";
@@ -228,8 +238,8 @@ try {
 							boolean checkUpdate = false;
 							while(result.next()){
 									if(result.getInt("passengers") < result.getInt("number_of_seats") && result.getInt("spot") == 1){
-										out.print("FLIGHT: " + result.getInt("flight_number")+ " HAS OPENED<br/>");
-										delWL = "DELETE FROM otrs.waitlist WHERE username = \"" + result.getString("username") + "\"" + " AND " + "spot = " + result.getInt("spot") + " AND" + " flight_number = " + result.getInt("flight_number");
+										out.print("FLIGHT: " + result.getInt("flight_number") + " on: " + result.getTimestamp("departure_time") + " HAS OPENED<br/>");
+										delWL = "DELETE FROM otrs.waitlist WHERE username = \"" + result.getString("username") + "\"" + " AND " + "spot = " + result.getInt("spot") + " AND" + " flight_number = " + result.getInt("flight_number") + " AND departure_time = \'" + result.getTimestamp("departure_time") + "\'";
 										//out.print(delWL);
 										currentFlight = result.getInt("flight_number");
 										PreparedStatement ps = con.prepareStatement(delWL);
