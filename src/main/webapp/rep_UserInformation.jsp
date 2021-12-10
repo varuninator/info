@@ -44,8 +44,6 @@ try {
 			}
 
 			if(seat != null  && seat != "" && ticket_id != 0){
-				out.print(session.getAttribute("id"));
-				out.print(session.getAttribute("ticket_flight"));
 				str = "Select * from ticket where flight_number = " + ticket_flight_number + " and id_num = " + ticket_id + " and seat_number = " + seat;
 
 				result = stmt.executeQuery(str);
