@@ -36,48 +36,50 @@ try {
 			String seat = request.getParameter("seat");
 			String str = "";
 			ResultSet result;
-			
-			
-			if(seat != null  && seat != "" && session.getAttribute("id") != null){
-				str = "Select * from ticket where flight_number = " + session.getAttribute("ticket_flight") + " and seat_number = " + seat;
+			int ticket_id = 0;
+			int ticket_flight_number = 0;
+			if(Collections.list(request.getParameterNames()).size() > 1){
+				ticket_id = Integer.parseInt(Collections.list(request.getParameterNames()).get(0));
+				ticket_flight_number = Integer.parseInt(Collections.list(request.getParameterNames()).get(1));	
+			}
+
+			if(seat != null  && seat != "" && ticket_id != 0){
+				out.print(session.getAttribute("id"));
+				out.print(session.getAttribute("ticket_flight"));
+				str = "Select * from ticket where flight_number = " + ticket_flight_number + " and id_num = " + ticket_id + " and seat_number = " + seat;
 
 				result = stmt.executeQuery(str);
 				if(result.next() == false){
-					str = "update ticket set seat_number = " + request.getParameter("seat") + " where id_num = " + session.getAttribute("id");
+					str = "update ticket set seat_number = " + request.getParameter("seat") + " where id_num = " + ticket_id;
 					PreparedStatement ps = con.prepareStatement(str);
-					
+
 					ps.executeUpdate();
 				}
 			}
-			
+			if(ticket_class != null  && ticket_class != "" && ticket_id != 0){
+
+					if(ticket_class.equals("first")){
+						str = "update ticket set first_class = 1 and business_class = 0 and economy_class = 0" + " where id_num = " + ticket_id;
+						PreparedStatement ps = con.prepareStatement(str);
+						ps.executeUpdate();
+					}
+					if(ticket_class.equals("business")){
+						str = "update ticket set first_class = 0 and business_class = 1 and economy_class = 0" + " where id_num = " + ticket_id;
+						PreparedStatement ps = con.prepareStatement(str);
+						ps.executeUpdate();
+						}
+					if(ticket_class.equals("economy")){
+						str = "update ticket set first_class = 0, business_class = 0, economy_class = 1" + " where id_num = " + ticket_id;
+
+						PreparedStatement ps = con.prepareStatement(str);
+						ps.executeUpdate();
+						}
+			}
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 			//String str = "SELECT * FROM user";
 			
 			//Run the query against the database.
 			//ResultSet result = stmt.executeQuery(str);
-			str = "SELECT * FROM user";
-		
-			//Run the query against the database.
-			result = stmt.executeQuery(str);
-			while(result.next()){
-				if(result.getString("username").equals(session.getAttribute("search"))){
-					String label = "User: " + result.getString("username");
-					%>
-					<form method="get" action="rep_UserInformation.jsp">
-							<label><%=label + " "%><input name = "edit_user"/></label>
-			 				 <input type="submit" value="edit" />
-						</form>
-					<%
-					label = "Type: " + result.getInt("type1");
-					%>
-					<form method="get" action="rep_UserInformation.jsp">
-							<label><%=label + " "%><input name = "edit_type"/></label>
-			 				 <input type="submit" value="edit" />
-						</form>
-					<%
-					out.print("<br/>");
-				}
-			}
 			
 			str = "SELECT * from ticket WHERE username = \"" + session.getAttribute("search") + "\"";
 			//Run the query against the database.
