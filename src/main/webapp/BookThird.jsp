@@ -86,6 +86,15 @@ try {
 						//out.print(for_);
 						ps = con.prepareStatement(for_);
 						 ps.executeUpdate();
+						 
+
+						 
+						 //redirect to browse for round trip
+						 if(session.getAttribute("search2") != null && session.getAttribute("round_trip") != "true"){
+							 response.sendRedirect("Browse.jsp"); 
+						 }
+						 session.setAttribute("round_trip", "false");
+						 session.setAttribute("flex", "");
 					}
 				}else{
 					tix = "INSERT otrs.ticket (user_delete, flight_number, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\"" + ", \"" + session.getAttribute("user") + "\""+", " + (result.getInt("seat_number") + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", false " + ", false" + ", true" + ")";
@@ -97,6 +106,14 @@ try {
 					//out.print(for_);
 					ps = con.prepareStatement(for_);
 					 ps.executeUpdate();
+
+
+					 
+					 //redirect to browse for round trip
+					 if(session.getAttribute("search2") != null && session.getAttribute("round_trip") != "true"){
+						 response.sendRedirect("Browse.jsp"); 
+					 }
+					 session.setAttribute("round_trip", "false");
 				}
 				 
 			}
