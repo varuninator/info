@@ -26,6 +26,13 @@ try {
 			if(sch != null){
 				session.setAttribute("search", sch);
 			}
+			
+			if(request.getParameter("edit_airport") != null){
+				String update = "update airport set airport_id = \"" + request.getParameter("edit_airport") + "\" where airport_id = \"" + session.getAttribute("search") + "\"";
+				stmt.executeUpdate(update);
+				session.setAttribute("search", request.getParameter("edit_airport"));
+			}
+			
 			%>
 			<form method="get" action="rep_AirportInformation.jsp">
 					<label>Search Flight: <input name = "search"/></label>
@@ -53,6 +60,9 @@ try {
 					out.print("<br/>");
 					
 					str = "SELECT * FROM flight where arriving_airport = \"" + result.getString("airport_id") + "\" or departing_airport = \"" + result.getString("airport_id") + "\"";
+					
+					
+					
 					result = stmt.executeQuery(str);
 					while(result.next()){
 						out.print("Flight number:" + result.getInt("flight_number") + ", Start: " + result.getString("departing_airport") + ", End: " + result.getString("arriving_airport") + ", Take-off Time: " + result.getTimestamp("departure_time") + ", Arrival Time: " + result.getTimestamp("arrival_time")+ ", Price: " + result.getInt("base_price") + "</br>");
