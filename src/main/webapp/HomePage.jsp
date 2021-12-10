@@ -209,7 +209,7 @@ try {
 						</form>
 					    <br>
 						<form method="get" action="AccountInfo.jsp">
-		  				<input type="submit" value="Account Info" />
+		  				<input type="submit" value="Account Info and Reservation Cancellations" />
 						</form>
 						<form method="get" action="UserQuestions.jsp">
 		  				<input type="submit" value="Ask Questions!" />
@@ -228,8 +228,8 @@ try {
 							boolean checkUpdate = false;
 							while(result.next()){
 									if(result.getInt("passengers") < result.getInt("number_of_seats") && result.getInt("spot") == 1){
-										out.print("FLIGHT: " + result.getInt("flight_number")+ " HAS OPENED<br/>");
-										delWL = "DELETE FROM otrs.waitlist WHERE username = \"" + result.getString("username") + "\"" + " AND " + "spot = " + result.getInt("spot") + " AND" + " flight_number = " + result.getInt("flight_number");
+										out.print("FLIGHT: " + result.getInt("flight_number") + " on: " + result.getTimestamp("departure_time") + " HAS OPENED<br/>");
+										delWL = "DELETE FROM otrs.waitlist WHERE username = \"" + result.getString("username") + "\"" + " AND " + "spot = " + result.getInt("spot") + " AND" + " flight_number = " + result.getInt("flight_number") + " AND departure_time = \'" + result.getTimestamp("departure_time") + "\'";
 										//out.print(delWL);
 										currentFlight = result.getInt("flight_number");
 										PreparedStatement ps = con.prepareStatement(delWL);

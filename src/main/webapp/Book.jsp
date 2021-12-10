@@ -1,4 +1,6 @@
-	<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+
+<%@page import="java.util.Date"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
@@ -10,7 +12,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
+	<%
 //Get the database connection
 try {
 			ApplicationDB db = new ApplicationDB();	
@@ -23,6 +25,9 @@ try {
 			
 			//String sch = request.getParameter("search");
 			
+			String depTime = Collections.list(request.getParameterNames()).get(1);
+			depTime = depTime.substring(0, 10) + " " + depTime.substring(10);
+
 			boolean booked = false;
 			
 			
@@ -42,9 +47,23 @@ try {
 				arr[i] = i+1;
 			}
 			
+			/*
+			false
+1001 == 1001
+2022-01-06 12:00:00.0 == 2022-01-06 12:00:05.0
+0 < 10
 			
-			 while (result.next()) {
-				if(result.getString("flight_number").equals(Collections.list(request.getParameterNames()).get(0)) &&  result.getInt("passengers")<result.getInt("number_of_seats")){ //count attribute on flight?
+			*/
+			while (result.next()) {
+				/*)
+				out.print((result.getString("flight_number").equals(Collections.list(request.getParameterNames()).get(0)) && String.valueOf(result.getTimestamp("departure_time")).equals(depTime) &&  result.getInt("passengers")<result.getInt("number_of_seats")) + "<br/>");
+				out.print(result.getString("flight_number") + " == " + Collections.list(request.getParameterNames()).get(0) + "<br/>");
+				out.print(String.valueOf(result.getTimestamp("departure_time")) + " == " + depTime + " " + "<br/>");
+				out.print(result.getInt("passengers") + " < " + result.getInt("number_of_seats") + "<br/>");
+				out.print("<br/><br/>");
+				*/
+				
+				if(result.getString("flight_number").equals(Collections.list(request.getParameterNames()).get(0)) && String.valueOf(result.getTimestamp("departure_time")).equals(depTime) &&  result.getInt("passengers")<result.getInt("number_of_seats")){ //count attribute on flight?
 						
 						booked = true;
 						
@@ -61,23 +80,20 @@ try {
 				
 				
 				
-				String up = "UPDATE otrs.flight SET passengers = passengers+1 WHERE flight_number =" + Collections.list(request.getParameterNames()).get(0);
+				String up = "UPDATE otrs.flight SET passengers = passengers+1 WHERE flight_number = " + Collections.list(request.getParameterNames()).get(0) + " AND departure_time = \'" + depTime + "\'";
 				PreparedStatement ps = con.prepareStatement(up);
-				
 				ps.executeUpdate();
-				
-				str = "Select Max(CAST(seat_number as SIGNED)) as seat_number  FROM for_ INNER JOIN flight ON for_.flight_number = " + Collections.list(request.getParameterNames()).get(0) + " INNER JOIN ticket ON for_.id_num = ticket.id_num";
-				
+
+				str = "Select Max(CAST(seat_number as SIGNED)) as seat_number  FROM for_ INNER JOIN flight ON for_.flight_number = " + Collections.list(request.getParameterNames()).get(0) + " AND flight.departure_time = \'" + depTime + "\'" + " INNER JOIN ticket ON for_.id_num = ticket.id_num";
 				result = stmt.executeQuery(str);
 				result.next();
 				
 				int max_seat = result.getInt("seat_number");
 				//out.print(max_seat);
-				str = "SELECT * FROM otrs.ticket WHERE flight_number = " + Collections.list(request.getParameterNames()).get(0) + " ORDER BY LENGTH(seat_number), seat_number ASC";
+				str = "SELECT * FROM otrs.ticket WHERE flight_number = " + Collections.list(request.getParameterNames()).get(0) + " AND departure_time = \'" + depTime + "\'" +  " ORDER BY LENGTH(seat_number), seat_number ASC";
 				result = stmt.executeQuery(str);
 				int i=0;
-				
-				 while (result.next()) {
+				while (result.next()) {
 					 
 						 if(arr[i]!=result.getInt("seat_number")){//if 
 							 max_seat = arr[i]-1;
@@ -97,15 +113,15 @@ try {
 					result = stmt.executeQuery(str);
 					result.next();
 					if(result.getString("username") != null){
-						tix = "INSERT otrs.ticket (user_delete, flight_number, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\"" + ", \"" + session.getAttribute("rep_user") + "\""+", " + (max_seat + 1) + ", \"" + result.getString("first_name") + "\""+", " +  "\"" + result.getString("last_name") + "\"" + ", true " + ", false" + ", false" + ")";	
+						tix = "INSERT otrs.ticket (user_delete, flight_number, departure_time, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\", \'" + depTime + "\', \"" + session.getAttribute("rep_user") + "\""+", " + (max_seat + 1) + ", \"" + result.getString("first_name") + "\""+", " +  "\"" + result.getString("last_name") + "\"" + ", true " + ", false" + ", false" + ")";
 						//out.print(tix);
-						  ps = con.prepareStatement(tix);
-						 ps.executeUpdate();
+						ps = con.prepareStatement(tix);
+						ps.executeUpdate();
 						 
 						String for_ = "INSERT otrs.for_ (flight_number) value (" + Collections.list(request.getParameterNames()).get(0)+ ")";
 						//out.print(for_);
 						ps = con.prepareStatement(for_);
-						 ps.executeUpdate();
+						ps.executeUpdate();
 						 
 
 						 
@@ -117,7 +133,7 @@ try {
 						 session.setAttribute("flex", "");
 					}
 				}else{
-					tix = "INSERT otrs.ticket (user_delete, flight_number, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\"" + ", \"" + session.getAttribute("user") + "\""+", " + (max_seat + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", true " + ", false" + ", false" + ")";	
+					tix = "INSERT otrs.ticket (user_delete, flight_number, departure_time, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\", \'" + depTime + "\', \"" + session.getAttribute("user") + "\""+", " + (max_seat + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", true " + ", false" + ", false" + ")";	
 					//out.print(tix);
 					  ps = con.prepareStatement(tix);
 					 ps.executeUpdate();
@@ -163,6 +179,6 @@ try {
 	out.print(e);
 }
 			%>
-			
+
 </body>
 </html>
