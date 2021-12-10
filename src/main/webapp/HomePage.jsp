@@ -110,6 +110,12 @@ try {
 			  				<input type="submit" value="Logout" />
 						</form>
 						<br>
+						<%
+						out.print(" -----------------<br/>");
+						out.print("REQUIRED*<br/>");
+						out.print(" -----------------<br/>");
+						%>
+						<br>
 						<body>	
 						<form name = userForm method = get action = "HomePage.jsp">
 							<label>Pick User:   <input name = "SearchUser"/></label>
@@ -143,7 +149,6 @@ try {
 			 				</select>&nbsp;<br> <input type="submit" value="Submit">
 			 				<%-- <input type="submit" value="Search" />--%>
 						</form>
-						<%out.print("required*");%>
 						<br>
 						<form method="get" action="rep_UserInformation.jsp">
 							<label>Search User: <input name = "search"/></label>
@@ -174,6 +179,12 @@ try {
 						<form method="get" action="HelloWorld.jsp">
 			  				<input type="submit" value="Logout" />
 						</form>
+						<br>
+						<%
+						out.print(" -----------------<br/>");
+						out.print("REQUIRED*<br/>");
+						out.print(" -----------------<br/>");
+						%>
 						<br>
 						<body>
 						<form method="get" action="Browse.jsp">
@@ -216,7 +227,6 @@ try {
 						</form>
 						<%
 						boolean full = false;
-						out.print("required*");
 						//out.print(session.getAttribute("f_num"));
 							ArrayList<Integer> decWLs = new ArrayList<Integer>();
 							String delWL = "";
