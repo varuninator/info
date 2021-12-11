@@ -20,6 +20,7 @@ try {
 			
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
+			Statement stmt2 = con.createStatement();
 			//Get the combobox from the index.jsp
 			String username = request.getParameter("user");
 			String password = request.getParameter("pass");
@@ -232,27 +233,29 @@ try {
 						//out.print(session.getAttribute("f_num"));
 							ArrayList<Integer> decWLs = new ArrayList<Integer>();
 							String delWL = "";
-							str = "SELECT * FROM flys INNER JOIN aircraft ON aircraft.aircraft_id = flys.aircraft_id INNER JOIN flight ON flight.flight_number = flys.flight_number INNER JOIN waitlist ON flys.flight_number = waitlist.flight_number WHERE waitlist.username = \"" + session.getAttribute("user") + "\"";
-							//out.print(str);
+							str = "SELECT * FROM waitlist where username = \"" + session.getAttribute("user") + "\"";
 							result = stmt.executeQuery(str);
 							int currentFlight = 0;
 							out.print("<br/>WAITLIST ALERTS: <br/>");
 							boolean checkUpdate = false;
 							while(result.next()){
-									if(result.getInt("passengers") < result.getInt("number_of_seats") && result.getInt("spot") == 1){
+								String check = "Select * from flight join flys using(flight_number) join aircraft using (aircraft_id) where departure_time = \'" + result.getTimestamp("departure_time") + "\'";
+								ResultSet result2 = stmt2.executeQuery(check);
+								while(result2.next()){
+									if(result2.getInt("passengers") < result2.getInt("number_of_seats") && result.getInt("spot") == 1){
 										out.print("FLIGHT: " + result.getInt("flight_number") + " on: " + result.getTimestamp("departure_time") + " HAS OPENED<br/>");
 										delWL = "DELETE FROM otrs.waitlist WHERE username = \"" + result.getString("username") + "\"" + " AND " + "spot = " + result.getInt("spot") + " AND" + " flight_number = " + result.getInt("flight_number") + " AND departure_time = \'" + result.getTimestamp("departure_time") + "\'";
 										//out.print(delWL);
 										currentFlight = result.getInt("flight_number");
 										PreparedStatement ps = con.prepareStatement(delWL);
 										ps.executeUpdate();
-										 checkUpdate = true;
+										checkUpdate = true;
 										break;
 									}
-									
+								}
+								
+								
 							}
-							
-							
 							
 							if(checkUpdate==true){
 								str = "SELECT * FROM waitlist WHERE flight_number = " + currentFlight;
