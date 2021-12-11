@@ -48,7 +48,7 @@ try {
 			
 			
 			 while (result.next()) {
-				if(result.getString("flight_number").equals(Collections.list(request.getParameterNames()).get(0)) &&  result.getInt("passengers")<result.getInt("number_of_seats")){ //count attribute on flight?
+				 if(result.getString("flight_number").equals(Collections.list(request.getParameterNames()).get(0)) && String.valueOf(result.getTimestamp("departure_time")).equals(depTime) &&  result.getInt("passengers")<result.getInt("number_of_seats")){ //count attribute on flight?
 						
 						booked = true;
 						
@@ -65,19 +65,19 @@ try {
 				
 				
 				
-				String up = "UPDATE otrs.flight SET passengers = passengers+1 WHERE flight_number =" + Collections.list(request.getParameterNames()).get(0);
+				String up = "UPDATE otrs.flight SET passengers = passengers+1 WHERE flight_number = " + Collections.list(request.getParameterNames()).get(0) + " AND departure_time = \'" + depTime + "\'";
 				PreparedStatement ps = con.prepareStatement(up);
 				
 				ps.executeUpdate();
 				
-				str = "Select Max(CAST(seat_number as SIGNED)) as seat_number  FROM for_ INNER JOIN flight ON for_.flight_number = " + Collections.list(request.getParameterNames()).get(0) + " INNER JOIN ticket ON for_.id_num = ticket.id_num";
+				str = "Select Max(CAST(seat_number as SIGNED)) as seat_number  FROM for_ INNER JOIN flight ON for_.flight_number = " + Collections.list(request.getParameterNames()).get(0) + " AND flight.departure_time = \'" + depTime + "\'" + " INNER JOIN ticket ON for_.id_num = ticket.id_num";
 				
 				result = stmt.executeQuery(str);
 				result.next();
 				
 				int max_seat = result.getInt("seat_number");
 				//out.print(max_seat);
-				str = "SELECT * FROM otrs.ticket WHERE flight_number = " + Collections.list(request.getParameterNames()).get(0) + " ORDER BY LENGTH(seat_number), seat_number ASC";
+				str = "SELECT * FROM otrs.ticket WHERE flight_number = " + Collections.list(request.getParameterNames()).get(0) + " AND departure_time = \'" + depTime + "\'" +  " ORDER BY LENGTH(seat_number), seat_number ASC";
 				result = stmt.executeQuery(str);
 				int i=0;
 				
