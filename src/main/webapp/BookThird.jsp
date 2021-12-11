@@ -97,7 +97,7 @@ try {
 					result = stmt.executeQuery(str);
 					result.next();
 					if(result.getString("username") != null){
-						tix = "INSERT otrs.ticket (user_delete, flight_number, departure_time, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\", \'" + depTime + "\', \"" + session.getAttribute("rep_user") + "\""+", " + (max_seat + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", true " + ", false" + ", false" + ")";	
+						tix = "INSERT otrs.ticket (user_delete, flight_number, departure_time, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\", \'" + depTime + "\', \"" + session.getAttribute("rep_user") + "\""+", " + (max_seat + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", false " + ", false" + ", true" + ")";	
 
 						 
 						String for_ = "INSERT otrs.for_ (flight_number) value (" + Collections.list(request.getParameterNames()).get(0)+ ")";
@@ -130,7 +130,7 @@ try {
 						 }
 					}
 				}else{
-					tix = "INSERT otrs.ticket (user_delete, flight_number, departure_time, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\", \'" + depTime + "\', \"" + session.getAttribute("user") + "\""+", " + (max_seat + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", true " + ", false" + ", false" + ")";	
+					tix = "INSERT otrs.ticket (user_delete, flight_number, departure_time, username, seat_number, first_name, last_name, first_class, business_class, economy_class) value (" + false + ", " + "\""  + Collections.list(request.getParameterNames()).get(0) + "\", \'" + depTime + "\', \"" + session.getAttribute("user") + "\""+", " + (max_seat + 1) + ", \"" + session.getAttribute("first") + "\""+", " +  "\"" + session.getAttribute("last") + "\"" + ", false " + ", false" + ", true" + ")";	
 
 					 
 					String for_ = "INSERT otrs.for_ (flight_number) value (" + Collections.list(request.getParameterNames()).get(0) + ")";
