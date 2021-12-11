@@ -50,7 +50,7 @@ try {
 			ResultSet result = stmt.executeQuery(str);
 			while(result.next()){
 				if(result.getString("airport_id").equals(session.getAttribute("search"))){
-					String label = "Airportr: " + result.getString("airport_id");
+					String label = "Airport: " + result.getString("airport_id");
 					%>
 					<form method="get" action="rep_AirportInformation.jsp">
 							<label><%=label + " "%><input name = "edit_airport"/></label>

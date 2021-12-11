@@ -40,11 +40,11 @@ try {
 			
 						%>
 						
-						<%--<form method="get" action="HomePage.jsp">
-			 				 <input type="submit" value="Browse Current Flights" />
+						<form method="get" action="HomePage.jsp">
+			 				 <input type="submit" value="Go Home" />
 						</form>
-						
-						<form method="get" action="HomePage.jsp"> 
+						<br>
+						<%--<form method="get" action="HomePage.jsp"> 
 			 				 <input type="submit" value="Browse Past Flights" />
 						</form> --%>
 						
@@ -52,9 +52,7 @@ try {
 		  				<input type="submit" value="Cancel Flights" />
 						</form>
 						
-						<form method="get" action="changeTix.jsp">
-		  				<input type="submit" value="Change Ticket" />
-						</form> 
+					
 						
 					
 						<%
