@@ -170,7 +170,12 @@ try {
 			
 			
 			
-			
+			%>
+			<form method="get" action="HomePage.jsp">
+							
+		  	<input type="submit" value="Home" />
+			</form>
+			<%
 
 			
 		
@@ -188,6 +193,12 @@ try {
 					
 } catch (Exception e) {
 	out.print(e);
+	%>
+	<form method="get" action="HomePage.jsp">
+					
+  	<input type="submit" value="Home" />
+	</form>
+	<%
 }
 			%>
 			
