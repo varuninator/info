@@ -327,6 +327,12 @@ try {
 			 	<input type="submit" value="Sort" />
 			</form>
 			<br>
+
+			<form method="get" action="HomePage.jsp">
+							
+		  	<input type="submit" value="Go Home" />
+			</form>
+			<br>
 			<%
 			while(result.next()){
 			if(request.getParameter("oneway") == "false"){

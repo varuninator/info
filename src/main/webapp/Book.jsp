@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Booked</title>
 </head>
 <body>
 <%
@@ -192,7 +192,7 @@ try {
 			%>
 			<form method="get" action="HomePage.jsp">
 							
-		  	<input type="submit" value="Home" />
+		  	<input type="submit" value="Go Home" />
 			</form>
 			<%
 
